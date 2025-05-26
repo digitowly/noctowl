@@ -1,0 +1,6 @@
+GET https://api.wikimedia.org/core/v1/wikipedia/en/search/page?q=blue whale
+
+###
+
+# Get a wikipedia article by its key
+GET https://api.wikimedia.org/core/v1/wikipedia/en/page/Blue_whale

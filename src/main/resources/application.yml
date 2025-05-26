@@ -1,0 +1,11 @@
+spring:
+  application:
+    name: noctowl
+
+  wikipedia:
+    base-url: https://en.wikipedia.org/api/rest_v1
+  wikimedia:
+    base-url: https://api.wikimedia.org/core/v1
+    user-agent: noctowl
+  wikidata:
+    base-url: https://www.wikidata.org/wiki

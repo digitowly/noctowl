@@ -1,0 +1,2 @@
+GET https://query.wikidata.org/#SELECT%20%3Ftaxon%20%3FtaxonLabel%20WHERE%20%7B%0A%20%20%3Ftaxon%20wdt%3AP171*%20wd%3AQ729.%20%23%20Q729%20%3D%20Animalia%0A%20%20SERVICE%20wikibase%3Alabel%20%7B%20bd%3AserviceParam%*
+Accept: application/sparql-results+json
