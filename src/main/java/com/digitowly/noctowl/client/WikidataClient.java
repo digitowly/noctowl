@@ -11,7 +11,7 @@ import org.springframework.web.client.RestTemplate;
 @Slf4j
 @RequiredArgsConstructor
 public class WikidataClient {
-    @Value("${spring.wikidata.base-url}")
+    @Value("${wikidata.base-url}")
     private String baseUrl;
 
     private final RestTemplate restTemplate;

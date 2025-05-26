@@ -14,7 +14,7 @@ import java.nio.charset.StandardCharsets;
 @Slf4j
 @RequiredArgsConstructor
 public class WikipediaClient {
-    @Value("${spring.wikipedia.base-url}")
+    @Value("${wikipedia.base-url}")
     private String baseUrl;
 
     private final RestTemplate restTemplate;

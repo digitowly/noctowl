@@ -18,10 +18,10 @@ import java.nio.charset.StandardCharsets;
 @Slf4j
 @RequiredArgsConstructor
 public class WikimediaClient {
-    @Value("${spring.wikimedia.base-url}")
+    @Value("${wikimedia.base-url}")
     private String baseUrl;
 
-    @Value("${spring.wikimedia.user-agent}")
+    @Value("${wikimedia.user-agent}")
     private String userAgent;
 
     private final RestTemplate restTemplate;
