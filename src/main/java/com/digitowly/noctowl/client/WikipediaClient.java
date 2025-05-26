@@ -10,8 +10,8 @@ import org.springframework.web.client.RestTemplate;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 
-@Slf4j
 @Component
+@Slf4j
 @RequiredArgsConstructor
 public class WikipediaClient {
     @Value("${spring.wikipedia.base-url}")

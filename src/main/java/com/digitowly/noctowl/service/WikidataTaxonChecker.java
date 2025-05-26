@@ -1,11 +1,11 @@
-package com.digitowly.noctowl.client;
+package com.digitowly.noctowl.service;
 
+import com.digitowly.noctowl.client.WikidataClient;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
-import org.springframework.web.client.RestTemplate;
 
 import java.util.LinkedHashSet;
 import java.util.Set;
@@ -15,12 +15,11 @@ import java.util.Set;
 @Slf4j
 public class WikidataTaxonChecker {
 
-    private static final String BASE_URL = "https://www.wikidata.org/wiki/Special:EntityData/";
     private static final String PARENT_TAXON_ID = "P171";
     private static final String ANIMALIA_QID = "Q729";
 
-    private final RestTemplate restTemplate;
     private final ObjectMapper objectMapper;
+    private final WikidataClient wikidataClient;
 
     public boolean isAnimal(String wikidataId) {
         Set<String> visited = new LinkedHashSet<>();
@@ -39,10 +38,7 @@ public class WikidataTaxonChecker {
         }
 
         try {
-            String url = BASE_URL + currentId + ".json";
-            log.debug("Fetching Wikidata entity from URL: {}", url);
-
-            String json = restTemplate.getForObject(url, String.class);
+            String json = wikidataClient.getEntity(currentId);
             if (json == null) {
                 log.warn("Received null JSON from Wikidata for ID {}", currentId);
                 return false;
@@ -69,6 +65,7 @@ public class WikidataTaxonChecker {
                     log.debug("Already visited {}", nextId);
                     continue;
                 }
+
                 if (isTaxon(nextId, targetId, visited)) return true;
             }
 
