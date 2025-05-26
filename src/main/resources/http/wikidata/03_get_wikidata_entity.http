@@ -1,1 +1,7 @@
-GET https://www.wikidata.org/wiki/Special:EntityData/Q42196.json
+# Get entity
+GET https://www.wikidata.org/wiki/Special:EntityData/Q26018.json
+
+###
+
+# Get claims
+GET https://www.wikidata.org/w/api.php?action=wbgetclaims&entity=Q42196&format=json

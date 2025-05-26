@@ -13,6 +13,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.springframework.test.web.client.match.MockRestRequestMatchers.requestTo;
 import static org.springframework.test.web.client.response.MockRestResponseCreators.withSuccess;
 
@@ -33,11 +34,11 @@ class WikidataClientTest {
 
     @Test
     void getEntity() throws Exception {
-        String entityId = "Blue_whale";
+        String entityId = "Q42196";
         Path path = Paths.get("src/test/resources/mock/wikidata/wikidata_entity_Q42196.json");
         String expectedJson = Files.readString(path);
 
-        String expectedUrl = baseUrl + "/page/summary/Blue_whale";
+        String expectedUrl = baseUrl + "/wiki/Special:EntityData/Q42196.json";
 
         mockServer
                 .expect(requestTo(expectedUrl))
@@ -49,6 +50,27 @@ class WikidataClientTest {
         JsonNode root = objectMapper.readTree(result);
         var expectedId = root.at("/entities/Q42196/id").asText();
 
-        assertEquals("Q42196", expectedId);
+        assertEquals(entityId, expectedId);
+    }
+
+    @Test
+    void getClaims() throws Exception {
+        String entityId = "Q42196";
+        Path path = Paths.get("src/test/resources/mock/wikidata/wikidata_claims_Q42196.json");
+        String expectedJson = Files.readString(path);
+
+        String expectedUrl = baseUrl + "/w/api.php?action=wbgetclaims&entity=Q42196&format=json";
+
+        mockServer
+                .expect(requestTo(expectedUrl))
+                .andRespond(withSuccess(expectedJson, org.springframework.http.MediaType.APPLICATION_JSON));
+
+        var result = wikidataClient.getClaims(entityId);
+
+        var objectMapper = new ObjectMapper();
+        JsonNode root = objectMapper.readTree(result);
+        var expected = root.at("/claims/P171").asText();
+
+        assertNotNull(expected);
     }
 }

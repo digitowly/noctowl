@@ -17,8 +17,14 @@ public class WikidataClient {
     private final RestTemplate restTemplate;
 
     public String getEntity(String entityId) {
-        var url = baseUrl + "/page/summary/" + entityId;
+        var url = baseUrl + "/wiki/Special:EntityData/" + entityId + ".json";
         log.info("Fetching wikidata for entity {} on {}", entityId, url);
+        return restTemplate.getForObject(url, String.class);
+    }
+
+    public String getClaims(String entityId) {
+        var url = baseUrl + "/w/api.php?action=wbgetclaims&entity=" + entityId + "&format=json";
+        log.info("Fetching claims for entity {} on {}", entityId, url);
         return restTemplate.getForObject(url, String.class);
     }
 }
