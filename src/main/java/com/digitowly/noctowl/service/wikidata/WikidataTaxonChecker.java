@@ -1,6 +1,7 @@
 package com.digitowly.noctowl.service.wikidata;
 
 import com.digitowly.noctowl.client.WikidataClient;
+import com.digitowly.noctowl.model.wikidata.WikidataProperty;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.AllArgsConstructor;
@@ -15,9 +16,6 @@ import java.util.concurrent.ConcurrentHashMap;
 @AllArgsConstructor
 @Slf4j
 public class WikidataTaxonChecker {
-
-    private static final String PARENT_TAXON_ID = "P171";
-    private static final String SUBCLASS_OF_ID = "P279";
 
     private static final String ANIMALIA_QID = "Q729";
 
@@ -68,12 +66,12 @@ public class WikidataTaxonChecker {
             JsonNode claimsNode = objectMapper.readTree(json).path("claims");
 
             // Try "parent taxon" property (P171) first
-            if (followPropertyPath(claimsNode, PARENT_TAXON_ID, targetId, visited)) {
+            if (followPropertyPath(claimsNode, WikidataProperty.PARENT_TAXON, targetId, visited)) {
                 return true;
             }
 
             // Fallback: Try "subclass of" property (P279)
-            if (followPropertyPath(claimsNode, SUBCLASS_OF_ID, targetId, visited)) {
+            if (followPropertyPath(claimsNode, WikidataProperty.SUBCLASS_OF, targetId, visited)) {
                 return true;
             }
 
@@ -84,8 +82,13 @@ public class WikidataTaxonChecker {
         return false;
     }
 
-    private boolean followPropertyPath(JsonNode claimsNode, String propertyId, String targetId, Set<String> visited) {
-        JsonNode propertyClaims = claimsNode.path(propertyId);
+    private boolean followPropertyPath(
+            JsonNode claimsNode,
+            WikidataProperty property,
+            String targetId,
+            Set<String> visited)
+    {
+        JsonNode propertyClaims = claimsNode.path(property.getId());
 
         if (!propertyClaims.isArray() || propertyClaims.isEmpty()) {
             return false;
