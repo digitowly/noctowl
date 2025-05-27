@@ -1,0 +1,1084 @@
+{
+  "claims": {
+    "P171": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P171",
+          "hash": "4e2f8c9ed1fa74b16436599581279c46db02be21",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 729,
+              "id": "Q729"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "q5174$560F53D0-9FD1-4344-B533-367704343EDB",
+        "rank": "normal"
+      }
+    ],
+    "P105": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P105",
+          "hash": "da6cf3b1a61134c2630bbb4bb808154a67bb8830",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 2752679,
+              "id": "Q2752679"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "q5174$8A108288-2391-40DC-AE8A-22C3B2555D94",
+        "rank": "normal"
+      }
+    ],
+    "P31": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P31",
+          "hash": "06629d890d7ab0ff85c403d8aadf57ce9809c01f",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 16521,
+              "id": "Q16521"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "q5174$3AA38FA4-B164-4A35-B8E2-26853DF1C964",
+        "rank": "normal"
+      }
+    ],
+    "P373": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P373",
+          "hash": "555ea0d5e1811577e30b11f987cfe93fe8323467",
+          "datavalue": {
+            "value": "Animalia",
+            "type": "string"
+          },
+          "datatype": "string"
+        },
+        "type": "statement",
+        "id": "q5174$DBAE2A55-410C-437E-889C-835D4E09CA2C",
+        "rank": "normal"
+      }
+    ],
+    "P18": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P18",
+          "hash": "16c9d5023571cbc466aa4943c115460d7b8693c4",
+          "datavalue": {
+            "value": "Branchiostoma lanceolatum.jpg",
+            "type": "string"
+          },
+          "datatype": "commonsMedia"
+        },
+        "type": "statement",
+        "qualifiers": {
+          "P180": [
+            {
+              "snaktype": "value",
+              "property": "P180",
+              "hash": "41de68107c6729ddfad4d3034c4f9650efafe1b4",
+              "datavalue": {
+                "value": {
+                  "entity-type": "item",
+                  "numeric-id": 2267046,
+                  "id": "Q2267046"
+                },
+                "type": "wikibase-entityid"
+              },
+              "datatype": "wikibase-item"
+            }
+          ]
+        },
+        "qualifiers-order": [
+          "P180"
+        ],
+        "id": "q5174$020A989D-AB15-449B-942E-1E78BA78902B",
+        "rank": "normal"
+      }
+    ],
+    "P910": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P910",
+          "hash": "d99e106565883ae78b5e5fb22e3034457e3e6cd7",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 8736327,
+              "id": "Q8736327"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q5174$48cfeeec-4852-cd6e-0fad-2b14b2c16b57",
+        "rank": "normal"
+      }
+    ],
+    "P685": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P685",
+          "hash": "2b4c2780fde26f9b132a12f2f2345ad84c12f4d1",
+          "datavalue": {
+            "value": "6072",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q5174$8727AE0A-47A2-449F-8C1C-07B0B611AF46",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "5aefe23ea56e033cd6f95ea264dfca7c45acb099",
+            "snaks": {
+              "P248": [
+                {
+                  "snaktype": "value",
+                  "property": "P248",
+                  "hash": "1851bc60ddfbcf6f76bd45aa7124fc0d5857a379",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 13711410,
+                      "id": "Q13711410"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P813": [
+                {
+                  "snaktype": "value",
+                  "property": "P813",
+                  "hash": "a7d0768fe2a8c84310b3ca6fe63bff9d7880c17e",
+                  "datavalue": {
+                    "value": {
+                      "time": "+2015-11-14T00:00:00Z",
+                      "timezone": 0,
+                      "before": 0,
+                      "after": 0,
+                      "precision": 11,
+                      "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                    },
+                    "type": "time"
+                  },
+                  "datatype": "time"
+                }
+              ]
+            },
+            "snaks-order": [
+              "P248",
+              "P813"
+            ]
+          }
+        ]
+      }
+    ],
+    "P646": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P646",
+          "hash": "970b15ed3854cfb223ad0471de621ae606e885c3",
+          "datavalue": {
+            "value": "/m/01_35s",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q5174$7D5A28AA-BC34-428A-B7DA-78A8594318B7",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "2b00cb481cddcac7623114367489b5c194901c4a",
+            "snaks": {
+              "P248": [
+                {
+                  "snaktype": "value",
+                  "property": "P248",
+                  "hash": "a94b740202b097dd33355e0e6c00e54b9395e5e0",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 15241312,
+                      "id": "Q15241312"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P577": [
+                {
+                  "snaktype": "value",
+                  "property": "P577",
+                  "hash": "fde79ecb015112d2f29229ccc1ec514ed3e71fa2",
+                  "datavalue": {
+                    "value": {
+                      "time": "+2013-10-28T00:00:00Z",
+                      "timezone": 0,
+                      "before": 0,
+                      "after": 0,
+                      "precision": 11,
+                      "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                    },
+                    "type": "time"
+                  },
+                  "datatype": "time"
+                }
+              ]
+            },
+            "snaks-order": [
+              "P248",
+              "P577"
+            ]
+          }
+        ]
+      }
+    ],
+    "P1895": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P1895",
+          "hash": "94530b2900bae75268f00de5ee36609f8be1cd3e",
+          "datavalue": {
+            "value": "54070",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q5174$DE9D27EC-84A5-4F04-9EE2-52EEC2695A9D",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "79a6b9257573ad4b46a26a807c4346e80a8d9555",
+            "snaks": {
+              "P248": [
+                {
+                  "snaktype": "value",
+                  "property": "P248",
+                  "hash": "e931cd61f5af1408b26339cd2f77022f945a72c3",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 2745977,
+                      "id": "Q2745977"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P813": [
+                {
+                  "snaktype": "value",
+                  "property": "P813",
+                  "hash": "f310fc7cef652822af67c167eca76d0d78a6085f",
+                  "datavalue": {
+                    "value": {
+                      "time": "+2015-06-17T00:00:00Z",
+                      "timezone": 0,
+                      "before": 0,
+                      "after": 0,
+                      "precision": 11,
+                      "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                    },
+                    "type": "time"
+                  },
+                  "datatype": "time"
+                }
+              ]
+            },
+            "snaks-order": [
+              "P248",
+              "P813"
+            ]
+          }
+        ]
+      }
+    ],
+    "P3417": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P3417",
+          "hash": "4aa00a1b93a4019c1eb4747b38195f8c4a5972d2",
+          "datavalue": {
+            "value": "Eumetazoa",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q5174$F65E49E9-58ED-4E35-BF3C-F190BFDED005",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "3b0a5bb3c1f955edce73740124f7d935698092ad",
+            "snaks": {
+              "P248": [
+                {
+                  "snaktype": "value",
+                  "property": "P248",
+                  "hash": "3ac9682e789a3a3791d4fd088b265ea03abef101",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 51711,
+                      "id": "Q51711"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ]
+            },
+            "snaks-order": [
+              "P248"
+            ]
+          }
+        ]
+      }
+    ],
+    "P4024": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P4024",
+          "hash": "7810d7cb46e9a6393a906fdcc52e8863e9fa3813",
+          "datavalue": {
+            "value": "Eumetazoa",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q5174$03960BE8-0C06-437D-85DC-51388874217B",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "d4bd87b862b12d99d26e86472d44f26858dee639",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "f30cbd35620c4ea6d0633aaf0210a8916130469b",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 8447,
+                      "id": "Q8447"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ]
+            },
+            "snaks-order": [
+              "P143"
+            ]
+          }
+        ]
+      }
+    ],
+    "P4746": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P4746",
+          "hash": "89184e79e16d452e9c0a8d47f2427e73bb73a859",
+          "datavalue": {
+            "value": "023869",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q5174$183D1EFD-7CEE-4AC1-A208-560C5193BB18",
+        "rank": "normal"
+      }
+    ],
+    "P4807": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P4807",
+          "hash": "41b6dfe3e4f39388b77b1a1b13c8a612e2fae8c2",
+          "datavalue": {
+            "value": "6ee0041b-43a1-4cd5-9193-01d0dfd048e7",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q5174$95BAC6DE-3DE7-4031-80EC-3046CC473C18",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "01814ff15b7ab1ecf077dd330272564614138e48",
+            "snaks": {
+              "P248": [
+                {
+                  "snaktype": "value",
+                  "property": "P248",
+                  "hash": "e931cd61f5af1408b26339cd2f77022f945a72c3",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 2745977,
+                      "id": "Q2745977"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P813": [
+                {
+                  "snaktype": "value",
+                  "property": "P813",
+                  "hash": "05bd33b9bb76c9a593862a1cafe1ac5b6738f331",
+                  "datavalue": {
+                    "value": {
+                      "time": "+2018-02-11T00:00:00Z",
+                      "timezone": 0,
+                      "before": 0,
+                      "after": 0,
+                      "precision": 11,
+                      "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                    },
+                    "type": "time"
+                  },
+                  "datatype": "time"
+                }
+              ]
+            },
+            "snaks-order": [
+              "P248",
+              "P813"
+            ]
+          }
+        ]
+      }
+    ],
+    "P1417": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P1417",
+          "hash": "d00c59690500ddfacdfb6bb08decd0a3a84e7df0",
+          "datavalue": {
+            "value": "animal/Eumetazoa",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "qualifiers": {
+          "P1810": [
+            {
+              "snaktype": "value",
+              "property": "P1810",
+              "hash": "19fb05cf4e715994630673f6785844fd5a30161c",
+              "datavalue": {
+                "value": "Eumetazoa",
+                "type": "string"
+              },
+              "datatype": "string"
+            }
+          ]
+        },
+        "qualifiers-order": [
+          "P1810"
+        ],
+        "id": "Q5174$9D8AB756-D814-42E4-81F4-E75CB0D1C367",
+        "rank": "normal"
+      }
+    ],
+    "P225": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P225",
+          "hash": "1aa7cc529f429f0474e076bacddcc6829d260a2b",
+          "datavalue": {
+            "value": "Eumetazoa",
+            "type": "string"
+          },
+          "datatype": "string"
+        },
+        "type": "statement",
+        "qualifiers": {
+          "P405": [
+            {
+              "snaktype": "value",
+              "property": "P405",
+              "hash": "26bbaf1a06a7d7fb6d1a57d4f2aa60938c52b479",
+              "datavalue": {
+                "value": {
+                  "entity-type": "item",
+                  "numeric-id": 62669,
+                  "id": "Q62669"
+                },
+                "type": "wikibase-entityid"
+              },
+              "datatype": "wikibase-item"
+            }
+          ],
+          "P574": [
+            {
+              "snaktype": "value",
+              "property": "P574",
+              "hash": "aefebc1003f4fb26876709facf764ef84aa5c2e8",
+              "datavalue": {
+                "value": {
+                  "time": "+1910-01-01T00:00:00Z",
+                  "timezone": 0,
+                  "before": 0,
+                  "after": 0,
+                  "precision": 9,
+                  "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                },
+                "type": "time"
+              },
+              "datatype": "time"
+            }
+          ]
+        },
+        "qualifiers-order": [
+          "P405",
+          "P574"
+        ],
+        "id": "q5174$7E8BC438-FF4E-42A3-A3D4-822109B9A450",
+        "rank": "normal"
+      }
+    ],
+    "P443": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P443",
+          "hash": "1d766e4dc95db26c1c95c539aa086ccb8a739c77",
+          "datavalue": {
+            "value": "LL-Q8752 (eus)-ElsaBornFree-Eumetazoa.wav",
+            "type": "string"
+          },
+          "datatype": "commonsMedia"
+        },
+        "type": "statement",
+        "qualifiers": {
+          "P407": [
+            {
+              "snaktype": "value",
+              "property": "P407",
+              "hash": "e456045320af7ea33ef2bf6c92e3f5e23c50c129",
+              "datavalue": {
+                "value": {
+                  "entity-type": "item",
+                  "numeric-id": 8752,
+                  "id": "Q8752"
+                },
+                "type": "wikibase-entityid"
+              },
+              "datatype": "wikibase-item"
+            }
+          ]
+        },
+        "qualifiers-order": [
+          "P407"
+        ],
+        "id": "Q5174$f7acc2f1-5649-4a7c-9719-8a47d22c5ea9",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "a2d0aa9fde8352323bec76b4ff84162e6e5681e3",
+            "snaks": {
+              "P854": [
+                {
+                  "snaktype": "value",
+                  "property": "P854",
+                  "hash": "bbaf51dbe5237f98894b59da3d4bfe848ce1a91f",
+                  "datavalue": {
+                    "value": "https://lingualibre.fr/wiki/Q214971",
+                    "type": "string"
+                  },
+                  "datatype": "url"
+                }
+              ]
+            },
+            "snaks-order": [
+              "P854"
+            ]
+          }
+        ]
+      }
+    ],
+    "P580": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P580",
+          "hash": "75ead3e67fe5bc9e412f24909c86955e7dd334c6",
+          "datavalue": {
+            "value": {
+              "time": "-635000000-00-00T00:00:00Z",
+              "timezone": 0,
+              "before": 0,
+              "after": 0,
+              "precision": 3,
+              "calendarmodel": "http://www.wikidata.org/entity/Q1985786"
+            },
+            "type": "time"
+          },
+          "datatype": "time"
+        },
+        "type": "statement",
+        "id": "Q5174$ecd0ca4a-4a94-db83-2aed-5f7c897fefee",
+        "rank": "normal"
+      }
+    ],
+    "P2716": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P2716",
+          "hash": "e75f9fd5753cf9bfde9f8a5db4b822bbec878172",
+          "datavalue": {
+            "value": "Animalia diversity.jpg",
+            "type": "string"
+          },
+          "datatype": "commonsMedia"
+        },
+        "type": "statement",
+        "id": "Q5174$5bde2ee5-4ee4-9fd9-ea17-47f405f257cc",
+        "rank": "normal"
+      }
+    ],
+    "P6366": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P6366",
+          "hash": "c5b0d8f23a77bc185687ba49086ad2f551fe8a36",
+          "datavalue": {
+            "value": "2779672378",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q5174$2C568B90-E129-4989-9A4A-D57B86E25328",
+        "rank": "normal"
+      }
+    ],
+    "P8408": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P8408",
+          "hash": "5e164824fac76475f98c3b1f7ec64d4600806b2a",
+          "datavalue": {
+            "value": "Eumetazoa",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q5174$235EE108-118C-42CA-91B6-1919F2C3D0E1",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "9a681f9dd95c90224547c404e11295f4f7dcf54e",
+            "snaks": {
+              "P248": [
+                {
+                  "snaktype": "value",
+                  "property": "P248",
+                  "hash": "9d5780dddffa8746637a9929a936ab6b0f601e24",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 64139102,
+                      "id": "Q64139102"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P813": [
+                {
+                  "snaktype": "value",
+                  "property": "P813",
+                  "hash": "622a5a27fa5b25e7e7984974e9db494cf8460990",
+                  "datavalue": {
+                    "value": {
+                      "time": "+2020-07-09T00:00:00Z",
+                      "timezone": 0,
+                      "before": 0,
+                      "after": 0,
+                      "precision": 11,
+                      "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                    },
+                    "type": "time"
+                  },
+                  "datatype": "time"
+                }
+              ]
+            },
+            "snaks-order": [
+              "P248",
+              "P813"
+            ]
+          }
+        ]
+      }
+    ],
+    "P830": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P830",
+          "hash": "30e4af70ed04c8d3f480f645f03e549dfb8b27e2",
+          "datavalue": {
+            "value": "58309680",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q5174$f75bfc2c-46e0-cb6d-115d-1ad1a836bab2",
+        "rank": "normal"
+      }
+    ],
+    "P3553": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P3553",
+          "hash": "a533500edad85fe03df61032b8ac7693c01193ea",
+          "datavalue": {
+            "value": "20041779",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "qualifiers": {
+          "P1810": [
+            {
+              "snaktype": "value",
+              "property": "P1810",
+              "hash": "cb6c40fde4dcf60e698f07a6eca17a08f5be00d5",
+              "datavalue": {
+                "value": "真后生动物",
+                "type": "string"
+              },
+              "datatype": "string"
+            }
+          ]
+        },
+        "qualifiers-order": [
+          "P1810"
+        ],
+        "id": "Q5174$6417C31E-C838-46A8-97C2-DFAE1C77A949",
+        "rank": "normal"
+      }
+    ],
+    "P4342": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P4342",
+          "hash": "4ef418f72a1d0645af0bbd5bf84e729c9364e543",
+          "datavalue": {
+            "value": "Eumetazoa",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q5174$A15A8AD8-44E8-45D3-B217-6078918B6B71",
+        "rank": "normal"
+      }
+    ],
+    "P1368": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P1368",
+          "hash": "93a98db6450a5e9c494bd7903d6e1ac241c31434",
+          "datavalue": {
+            "value": "000316078",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q5174$c9adf596-46de-4811-c838-e0574873dc12",
+        "rank": "normal"
+      }
+    ],
+    "P2892": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P2892",
+          "hash": "3162c13e37274c0c294fb081bd6819e6c96d2bde",
+          "datavalue": {
+            "value": "C0997870",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q5174$D204EA5C-76E7-4D18-8135-3FC910390117",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "22d5690dd7dbc0c61260ced6e331cbdb4322e6d1",
+            "snaks": {
+              "P887": [
+                {
+                  "snaktype": "value",
+                  "property": "P887",
+                  "hash": "a0b7575579d620852cd869079ff98c2bbcc614b3",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 119459346,
+                      "id": "Q119459346"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P248": [
+                {
+                  "snaktype": "value",
+                  "property": "P248",
+                  "hash": "0dffc9c217cd4550d6e1be4e56268ece7068efc2",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 118645236,
+                      "id": "Q118645236"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P813": [
+                {
+                  "snaktype": "value",
+                  "property": "P813",
+                  "hash": "8eaf1d814150141867307f46f80eacce793a1c32",
+                  "datavalue": {
+                    "value": {
+                      "time": "+2023-06-16T00:00:00Z",
+                      "timezone": 0,
+                      "before": 0,
+                      "after": 0,
+                      "precision": 11,
+                      "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                    },
+                    "type": "time"
+                  },
+                  "datatype": "time"
+                }
+              ]
+            },
+            "snaks-order": [
+              "P887",
+              "P248",
+              "P813"
+            ]
+          }
+        ]
+      }
+    ],
+    "P12086": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P12086",
+          "hash": "4b3f08c57b77567c617c88bacef2a25ae32d5a55",
+          "datavalue": {
+            "value": "Eumetazoa",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q5174$9030AD52-FB5F-4BDB-B658-828026CFA724",
+        "rank": "normal"
+      }
+    ],
+    "P9157": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P9157",
+          "hash": "bb2674fe924c3a983be96ec61900bad24f930852",
+          "datavalue": {
+            "value": "641038",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q5174$12009151-CE2C-4F58-95F4-D57BE7103C5B",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "ec221218fa0441e97bb26a00e468458b4050b91c",
+            "snaks": {
+              "P248": [
+                {
+                  "snaktype": "value",
+                  "property": "P248",
+                  "hash": "993fd1273744a409e3ffcd9a63fbd49c27fd2824",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 124708476,
+                      "id": "Q124708476"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P813": [
+                {
+                  "snaktype": "value",
+                  "property": "P813",
+                  "hash": "f146b81c2f2ea47296b218acea3600e50f34f099",
+                  "datavalue": {
+                    "value": {
+                      "time": "+2024-07-11T00:00:00Z",
+                      "timezone": 0,
+                      "before": 0,
+                      "after": 0,
+                      "precision": 11,
+                      "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                    },
+                    "type": "time"
+                  },
+                  "datatype": "time"
+                }
+              ]
+            },
+            "snaks-order": [
+              "P248",
+              "P813"
+            ]
+          }
+        ]
+      }
+    ],
+    "P6262": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P6262",
+          "hash": "51fe999e37196b906576acfbf23fec7efc3813f8",
+          "datavalue": {
+            "value": "ru.zoocreatures:Эуметазои",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "qualifiers": {
+          "P1810": [
+            {
+              "snaktype": "value",
+              "property": "P1810",
+              "hash": "700f32c4b34cda49b9d2c795a3f9781bd59925bb",
+              "datavalue": {
+                "value": "Эуметазои",
+                "type": "string"
+              },
+              "datatype": "string"
+            }
+          ],
+          "P407": [
+            {
+              "snaktype": "value",
+              "property": "P407",
+              "hash": "d291ddb7cd77c94a7bd709a8395934147e0864fc",
+              "datavalue": {
+                "value": {
+                  "entity-type": "item",
+                  "numeric-id": 7737,
+                  "id": "Q7737"
+                },
+                "type": "wikibase-entityid"
+              },
+              "datatype": "wikibase-item"
+            }
+          ]
+        },
+        "qualifiers-order": [
+          "P1810",
+          "P407"
+        ],
+        "id": "Q5174$8364749f-44c4-ee36-7096-35a7d43993a8",
+        "rank": "normal"
+      }
+    ],
+    "P8885": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P8885",
+          "hash": "cf2e508528a13b4e5257b4e56ad456fad3a45f5d",
+          "datavalue": {
+            "value": "진정후생동물",
+            "type": "string"
+          },
+          "datatype": "external-id"
+        },
+        "type": "statement",
+        "id": "Q5174$6875a10b-414a-759d-ce57-c0463b5ed638",
+        "rank": "normal"
+      }
+    ]
+  }
+}

@@ -35,7 +35,7 @@ class WikidataClientTest {
     @Test
     void getEntity() throws Exception {
         String entityId = "Q42196";
-        Path path = Paths.get("src/test/resources/mock/wikidata/wikidata_entity_Q42196.json");
+        Path path = Paths.get("src/test/resources/mock/wikidata/blue_whale/wikidata_entity_Q42196_blue_whale.json");
         String expectedJson = Files.readString(path);
 
         String expectedUrl = baseUrl + "/wiki/Special:EntityData/Q42196.json";
@@ -56,7 +56,7 @@ class WikidataClientTest {
     @Test
     void getClaims() throws Exception {
         String entityId = "Q42196";
-        Path path = Paths.get("src/test/resources/mock/wikidata/wikidata_claims_Q42196.json");
+        Path path = Paths.get("src/test/resources/mock/wikidata/blue_whale/wikidata_claims_Q42196_blue_whale.json");
         String expectedJson = Files.readString(path);
 
         String expectedUrl = baseUrl + "/w/api.php?action=wbgetclaims&entity=Q42196&format=json";

@@ -1,0 +1,122 @@
+{
+  "claims": {
+    "P18": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P18",
+          "hash": "e1c70dcc25a8934d423b25e0b676853e64513656",
+          "datavalue": {
+            "value": "Blue Whale - Natural History Museum, London - Joy of Museums.jpg",
+            "type": "string"
+          },
+          "datatype": "commonsMedia"
+        },
+        "type": "statement",
+        "id": "Q117219396$FA9D2DA1-B6FD-4CF3-994C-6376B97CC3B9",
+        "rank": "normal"
+      }
+    ],
+    "P31": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P31",
+          "hash": "aac7ee74ca3f7f2c488619247dc8e2302e0f105e",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 26401003,
+              "id": "Q26401003"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q117219396$9e15d803-4d2f-11b9-c4a3-6237f5fdd0c8",
+        "rank": "normal"
+      }
+    ],
+    "P10241": [
+      {
+        "mainsnak": {
+          "snaktype": "value",
+          "property": "P10241",
+          "hash": "3a6d5891008e7d4adc0c18115a4ff835d59253af",
+          "datavalue": {
+            "value": {
+              "entity-type": "item",
+              "numeric-id": 42196,
+              "id": "Q42196"
+            },
+            "type": "wikibase-entityid"
+          },
+          "datatype": "wikibase-item"
+        },
+        "type": "statement",
+        "id": "Q117219396$3F415011-65C6-4485-9D30-9D6FB0ACEBF5",
+        "rank": "normal",
+        "references": [
+          {
+            "hash": "1c24ca34c5c0b89b3a9f34e9ebf98b606aea6335",
+            "snaks": {
+              "P143": [
+                {
+                  "snaktype": "value",
+                  "property": "P143",
+                  "hash": "e4f6d9441d0600513c4533c672b5ab472dc73694",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 328,
+                      "id": "Q328"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P813": [
+                {
+                  "snaktype": "value",
+                  "property": "P813",
+                  "hash": "92e33fb0d35f2e2593f9d6519b6a3081d72df95b",
+                  "datavalue": {
+                    "value": {
+                      "time": "+2024-07-04T00:00:00Z",
+                      "timezone": 0,
+                      "before": 0,
+                      "after": 0,
+                      "precision": 11,
+                      "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                    },
+                    "type": "time"
+                  },
+                  "datatype": "time"
+                }
+              ],
+              "P4656": [
+                {
+                  "snaktype": "value",
+                  "property": "P4656",
+                  "hash": "29f06bc20ad44eab52c224ce65b05125c06fd7cf",
+                  "datavalue": {
+                    "value": "https://en.wikipedia.org/w/index.php?title=Hope_(whale)&oldid=1223164885",
+                    "type": "string"
+                  },
+                  "datatype": "url"
+                }
+              ]
+            },
+            "snaks-order": [
+              "P143",
+              "P813",
+              "P4656"
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}
