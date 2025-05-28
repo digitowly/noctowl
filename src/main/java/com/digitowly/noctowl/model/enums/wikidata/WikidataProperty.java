@@ -1,4 +1,4 @@
-package com.digitowly.noctowl.model.wikidata;
+package com.digitowly.noctowl.model.enums.wikidata;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;

@@ -41,12 +41,14 @@ class WikimediaClientTest {
                 {
                  "id": 12345,
                  "title": "Blue whale",
-                 "key": "Blue_whale"
+                 "key": "Blue_whale",
+                 "description": "Baleen whale, largest animal ever known"
                 },
                 {
                  "id": 67890,
                  "title": "Blue whale project",
-                 "key": "Blue_whale_project"
+                 "key": "Blue_whale_project",
+                 "description": "Some random project"
                 }
               ]
             }
@@ -62,8 +64,8 @@ class WikimediaClientTest {
         var result = wikimediaClient.getPages(title);
         var expected = new WikimediaPagesDto(
                 List.of(
-                        new WikimediaPageDto(12345, "Blue_whale", "Blue whale"),
-                        new WikimediaPageDto(67890, "Blue_whale_project", "Blue whale project")
+                        new WikimediaPageDto(12345, "Blue_whale", "Blue whale", "Baleen whale, largest animal ever known"),
+                        new WikimediaPageDto(67890, "Blue_whale_project", "Blue whale project", "Some random project")
                 )
         );
         assertEquals(result, expected);

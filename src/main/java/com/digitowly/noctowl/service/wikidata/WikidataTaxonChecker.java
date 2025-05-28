@@ -1,7 +1,7 @@
 package com.digitowly.noctowl.service.wikidata;
 
 import com.digitowly.noctowl.client.WikidataClient;
-import com.digitowly.noctowl.model.wikidata.WikidataProperty;
+import com.digitowly.noctowl.model.enums.wikidata.WikidataProperty;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.AllArgsConstructor;

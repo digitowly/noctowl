@@ -2,7 +2,7 @@ spring:
   application:
     name: noctowl
 server:
-  port: 8082
+  port: 8084
 
 wikipedia:
   base-url: https://en.wikipedia.org/api/rest_v1
@@ -10,4 +10,4 @@ wikimedia:
   base-url: https://api.wikimedia.org/core/v1
   user-agent: noctowl
 wikidata:
-  base-url: https://www.wikidata.org/wiki
+  base-url: https://www.wikidata.org
