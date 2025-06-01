@@ -2,9 +2,9 @@ package com.digitowly.noctowl.service;
 
 import com.digitowly.noctowl.client.WikimediaClient;
 import com.digitowly.noctowl.client.WikipediaClient;
-import com.digitowly.noctowl.client.dto.WikimediaPageDto;
-import com.digitowly.noctowl.client.dto.WikimediaPagesDto;
-import com.digitowly.noctowl.client.dto.WikipediaSummaryDto;
+import com.digitowly.noctowl.model.wikidata.WikimediaPageDto;
+import com.digitowly.noctowl.model.wikidata.WikimediaPagesDto;
+import com.digitowly.noctowl.model.wikidata.WikipediaSummaryDto;
 import com.digitowly.noctowl.model.enums.TaxonType;
 import com.digitowly.noctowl.service.wikidata.WikidataTaxonChecker;
 import org.junit.jupiter.api.BeforeEach;

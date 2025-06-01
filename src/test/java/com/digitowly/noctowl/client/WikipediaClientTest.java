@@ -1,6 +1,6 @@
 package com.digitowly.noctowl.client;
 
-import com.digitowly.noctowl.client.dto.WikipediaSummaryDto;
+import com.digitowly.noctowl.model.wikidata.WikipediaSummaryDto;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.test.util.ReflectionTestUtils;

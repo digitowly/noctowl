@@ -2,7 +2,7 @@ package com.digitowly.noctowl.service;
 
 import com.digitowly.noctowl.client.WikimediaClient;
 import com.digitowly.noctowl.client.WikipediaClient;
-import com.digitowly.noctowl.client.dto.WikimediaPageDto;
+import com.digitowly.noctowl.model.wikidata.WikimediaPageDto;
 import com.digitowly.noctowl.model.dto.TaxonomyResponse;
 import com.digitowly.noctowl.model.enums.TaxonType;
 import com.digitowly.noctowl.service.wikidata.WikidataTaxonChecker;

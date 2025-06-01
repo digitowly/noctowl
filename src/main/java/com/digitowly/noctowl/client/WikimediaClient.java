@@ -1,6 +1,6 @@
 package com.digitowly.noctowl.client;
 
-import com.digitowly.noctowl.client.dto.WikimediaPagesDto;
+import com.digitowly.noctowl.model.wikidata.WikimediaPagesDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;

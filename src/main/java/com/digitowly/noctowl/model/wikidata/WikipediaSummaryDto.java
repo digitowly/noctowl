@@ -1,4 +1,4 @@
-package com.digitowly.noctowl.client.dto;
+package com.digitowly.noctowl.model.wikidata;
 
 public record WikipediaSummaryDto(
     String title,

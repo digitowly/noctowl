@@ -1,7 +1,7 @@
 package com.digitowly.noctowl.client;
 
-import com.digitowly.noctowl.client.dto.WikimediaPageDto;
-import com.digitowly.noctowl.client.dto.WikimediaPagesDto;
+import com.digitowly.noctowl.model.wikidata.WikimediaPageDto;
+import com.digitowly.noctowl.model.wikidata.WikimediaPagesDto;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.test.util.ReflectionTestUtils;
