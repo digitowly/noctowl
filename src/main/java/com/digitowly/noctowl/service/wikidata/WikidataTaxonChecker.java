@@ -1,16 +1,18 @@
 package com.digitowly.noctowl.service.wikidata;
 
 import com.digitowly.noctowl.client.WikidataClient;
+import com.digitowly.noctowl.model.enums.TaxonType;
 import com.digitowly.noctowl.model.enums.wikidata.WikidataProperty;
+import com.digitowly.noctowl.repository.TaxonomyTreeRepository;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.stereotype.Component;
 
 import java.util.LinkedHashSet;
 import java.util.Set;
-import java.util.concurrent.ConcurrentHashMap;
 
 @Component
 @AllArgsConstructor
@@ -21,42 +23,35 @@ public class WikidataTaxonChecker {
 
     private final ObjectMapper objectMapper;
     private final WikidataClient wikidataClient;
+    private final TaxonomyTreeRepository taxonomyTreeRepository;
 
-    // In-memory caches
-    private final Set<String> knownAnimals = ConcurrentHashMap.newKeySet();
-    private final Set<String> knownNonAnimals = ConcurrentHashMap.newKeySet();
+    public boolean isTaxon(TaxonType taxonType, String wikidataId) {
+        if (isCacheHit(taxonType, wikidataId)) return true;
 
-    public boolean isAnimal(String wikidataId) {
-        if (knownAnimals.contains(wikidataId)) {
-            log.info("Cache hit: {} is known to be an animal.", wikidataId);
-            return true;
-        }
-        if (knownNonAnimals.contains(wikidataId)) {
-            log.info("Cache hit: {} is known NOT to be an animal.", wikidataId);
-            return false;
-        }
-
-        Set<String> visited = new LinkedHashSet<>();
+        Set<String> visitedTaxonIds = new LinkedHashSet<>();
         log.info("Checking if Wikidata entity {} is an animal (descendant of {}).", wikidataId, ANIMALIA_QID);
-        boolean result = isTaxon(wikidataId, ANIMALIA_QID, visited);
+        boolean result = isWikidataTaxon(taxonType, wikidataId, ANIMALIA_QID, visitedTaxonIds);
         log.info("Result for {}: {}", wikidataId, result ? "IS an animal" : "NOT an animal");
-        log.info("Visited taxon path: {}", visited);
+        log.info("Visited taxon path: {}", visitedTaxonIds);
+
+        if (!result) return false;
 
         // Cache all visited taxa as animal or non-animal
-        if (result) {
-            knownAnimals.addAll(visited);
-        } else {
-            knownNonAnimals.addAll(visited);
+        switch (taxonType) {
+            case ANIMAL -> taxonomyTreeRepository.addWikiAnimalIds(visitedTaxonIds);
         }
-
-        return result;
+        return true;
     }
 
-    private boolean isTaxon(String currentId, String targetId, Set<String> visited) {
-        visited.add(currentId);
+    private boolean isWikidataTaxon(
+            TaxonType taxonType,
+            String currentId,
+            String targetId,
+            @NotNull Set<String> visitedIds
+    ) {
+        visitedIds.add(currentId);
 
-        if (knownAnimals.contains(currentId)) return true;
-        if (knownNonAnimals.contains(currentId)) return false;
+        if (isCacheHit(taxonType, currentId)) return true;
         if (currentId.equals(targetId)) return true;
 
         try {
@@ -66,12 +61,12 @@ public class WikidataTaxonChecker {
             JsonNode claimsNode = objectMapper.readTree(json).path("claims");
 
             // Try "parent taxon" property (P171) first
-            if (followPropertyPath(claimsNode, WikidataProperty.PARENT_TAXON, targetId, visited)) {
+            if (followPropertyPath(taxonType, claimsNode, WikidataProperty.PARENT_TAXON, targetId, visitedIds)) {
                 return true;
             }
 
             // Fallback: Try "subclass of" property (P279)
-            if (followPropertyPath(claimsNode, WikidataProperty.SUBCLASS_OF, targetId, visited)) {
+            if (followPropertyPath(taxonType, claimsNode, WikidataProperty.SUBCLASS_OF, targetId, visitedIds)) {
                 return true;
             }
 
@@ -83,11 +78,12 @@ public class WikidataTaxonChecker {
     }
 
     private boolean followPropertyPath(
-            JsonNode claimsNode,
-            WikidataProperty property,
+            TaxonType taxonType,
+            @NotNull JsonNode claimsNode,
+            @NotNull WikidataProperty property,
             String targetId,
-            Set<String> visited)
-    {
+            Set<String> visitedIds
+    ) {
         JsonNode propertyClaims = claimsNode.path(property.getId());
 
         if (!propertyClaims.isArray() || propertyClaims.isEmpty()) {
@@ -96,13 +92,22 @@ public class WikidataTaxonChecker {
 
         for (JsonNode claim : propertyClaims) {
             String nextId = claim.at("/mainsnak/datavalue/value/id").asText(null);
-            if (nextId == null || visited.contains(nextId)) continue;
+            if (nextId == null || visitedIds.contains(nextId)) continue;
 
-            if (isTaxon(nextId, targetId, visited)) {
+            if (isWikidataTaxon(taxonType, nextId, targetId, visitedIds)) {
                 return true;
             }
         }
 
         return false;
+    }
+
+    private boolean isCacheHit(@NotNull TaxonType taxonType, String wikidataId) {
+        boolean isCached = switch (taxonType) {
+            case ANIMAL -> taxonomyTreeRepository.hasWikiAnimalId(wikidataId);
+            default -> false;
+        };
+        if (isCached) log.info("Cache hit: {} is a known {}.", wikidataId, taxonType);
+        return isCached;
     }
 }

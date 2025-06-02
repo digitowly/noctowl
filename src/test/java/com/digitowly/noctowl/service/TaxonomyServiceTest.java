@@ -41,7 +41,7 @@ class TaxonomyServiceTest {
         var summaryDto = new WikipediaSummaryDto(name, wikidataId);
         when(wikimediaClient.getPages(name)).thenReturn(pagesDto);
         when(wikipediaClient.getSummary("Cat")).thenReturn(summaryDto);
-        when(wikidataTaxonChecker.isAnimal(wikidataId)).thenReturn(true);
+        when(wikidataTaxonChecker.isTaxon(TaxonType.ANIMAL, wikidataId)).thenReturn(true);
 
         var result = taxonomyService.find(TaxonType.ANIMAL, name);
         assertThat(result).isNotNull();

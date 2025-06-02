@@ -1,6 +1,8 @@
 package com.digitowly.noctowl.service.wikidata;
 
 import com.digitowly.noctowl.client.WikidataClient;
+import com.digitowly.noctowl.model.enums.TaxonType;
+import com.digitowly.noctowl.repository.InMemoryTaxonomyTreeRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -32,7 +34,11 @@ class WikidataTaxonCheckerTest {
         var wikidataClient = new WikidataClient(restTemplate);
         ReflectionTestUtils.setField(wikidataClient, "baseUrl", baseUrl);
 
-        this.checker = new WikidataTaxonChecker(new ObjectMapper(), wikidataClient);
+        this.checker = new WikidataTaxonChecker(
+                new ObjectMapper(),
+                wikidataClient,
+                new InMemoryTaxonomyTreeRepository()
+        );
     }
 
     @Test
@@ -64,11 +70,11 @@ class WikidataTaxonCheckerTest {
                 .expect(requestTo(urlQ5174))
                 .andRespond(withSuccess(jsonQ5174, org.springframework.http.MediaType.APPLICATION_JSON));
 
-        var isAnimal = checker.isAnimal(wikidataBlueWhaleId);
+        var isAnimal = checker.isTaxon(TaxonType.ANIMAL, wikidataBlueWhaleId);
         assertTrue(isAnimal);
 
         // Test cache hit
-        var isAnimalFromMemory = checker.isAnimal(wikidataBlueWhaleId);
+        var isAnimalFromMemory = checker.isTaxon(TaxonType.ANIMAL, wikidataBlueWhaleId);
         assertTrue(isAnimalFromMemory);
 
     }
@@ -94,7 +100,7 @@ class WikidataTaxonCheckerTest {
                 .expect(requestTo(urlQ10850))
                 .andRespond(withSuccess(jsonQ10850, org.springframework.http.MediaType.APPLICATION_JSON));
 
-        var isAnimal = checker.isAnimal(wikidataRatId);
+        var isAnimal = checker.isTaxon(TaxonType.ANIMAL, wikidataRatId);
         assertTrue(isAnimal);
     }
 
@@ -111,11 +117,7 @@ class WikidataTaxonCheckerTest {
                 .expect(requestTo(urlQ117219396))
                 .andRespond(withSuccess(jsonQ117219396, org.springframework.http.MediaType.APPLICATION_JSON));
 
-        var isAnimal = checker.isAnimal(wikidataId);
+        var isAnimal = checker.isTaxon(TaxonType.ANIMAL, wikidataId);
         assertFalse(isAnimal);
-
-        // Test cache hit
-        var isAnimalFromMemory = checker.isAnimal(wikidataId);
-        assertFalse(isAnimalFromMemory);
     }
 }
