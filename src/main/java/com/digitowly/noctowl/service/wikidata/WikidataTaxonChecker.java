@@ -3,6 +3,7 @@ package com.digitowly.noctowl.service.wikidata;
 import com.digitowly.noctowl.client.WikidataClient;
 import com.digitowly.noctowl.model.enums.TaxonType;
 import com.digitowly.noctowl.model.enums.wikidata.WikidataProperty;
+import com.digitowly.noctowl.model.enums.wikidata.WikidataQID;
 import com.digitowly.noctowl.repository.TaxonomyTreeRepository;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -19,8 +20,6 @@ import java.util.Set;
 @Slf4j
 public class WikidataTaxonChecker {
 
-    private static final String ANIMALIA_QID = "Q729";
-
     private final ObjectMapper objectMapper;
     private final WikidataClient wikidataClient;
     private final TaxonomyTreeRepository taxonomyTreeRepository;
@@ -28,9 +27,15 @@ public class WikidataTaxonChecker {
     public boolean isTaxon(TaxonType taxonType, String wikidataId) {
         if (isCacheHit(taxonType, wikidataId)) return true;
 
+        var targetQID = switch (taxonType) {
+            case ANIMAL -> WikidataQID.ANIMALIA;
+            default -> null;
+        };
+        if (targetQID == null) return false;
+
         Set<String> visitedTaxonIds = new LinkedHashSet<>();
-        log.info("Checking if Wikidata entity {} is an animal (descendant of {}).", wikidataId, ANIMALIA_QID);
-        boolean result = isWikidataTaxon(taxonType, wikidataId, ANIMALIA_QID, visitedTaxonIds);
+        log.info("Checking if Wikidata entity {} is an animal (descendant of {}).", wikidataId, targetQID);
+        boolean result = isWikidataTaxon(taxonType, wikidataId, targetQID.getId(), visitedTaxonIds);
         log.info("Result for {}: {}", wikidataId, result ? "IS an animal" : "NOT an animal");
         log.info("Visited taxon path: {}", visitedTaxonIds);
 
@@ -38,7 +43,7 @@ public class WikidataTaxonChecker {
 
         // Cache all visited taxa as animal or non-animal
         switch (taxonType) {
-            case ANIMAL -> taxonomyTreeRepository.addWikiAnimalIds(visitedTaxonIds);
+            case ANIMAL: taxonomyTreeRepository.addWikiAnimalIds(visitedTaxonIds);
         }
         return true;
     }
