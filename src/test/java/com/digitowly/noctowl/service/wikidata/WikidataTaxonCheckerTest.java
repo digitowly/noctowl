@@ -2,7 +2,7 @@ package com.digitowly.noctowl.service.wikidata;
 
 import com.digitowly.noctowl.client.WikidataClient;
 import com.digitowly.noctowl.model.enums.TaxonType;
-import com.digitowly.noctowl.repository.taxonomytree.TaxonomyTreeRepository;
+import com.digitowly.noctowl.repository.TaxonomyTreeRepository;
 import com.digitowly.noctowl.service.storage.TaxonomyTreeStorageHandler;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;

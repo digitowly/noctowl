@@ -3,7 +3,7 @@ package com.digitowly.noctowl.service.storage;
 import com.digitowly.noctowl.model.entity.TaxonomyTreeEntity;
 import com.digitowly.noctowl.model.enums.TaxonType;
 import com.digitowly.noctowl.model.enums.wikidata.WikidataQID;
-import com.digitowly.noctowl.repository.taxonomytree.TaxonomyTreeRepository;
+import com.digitowly.noctowl.repository.TaxonomyTreeRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.jetbrains.annotations.NotNull;

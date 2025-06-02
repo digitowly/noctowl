@@ -1,4 +1,4 @@
-package com.digitowly.noctowl.repository.taxonomytree;
+package com.digitowly.noctowl.repository;
 
 import com.digitowly.noctowl.model.entity.TaxonomyTreeEntity;
 import org.springframework.data.jpa.repository.Modifying;
