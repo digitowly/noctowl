@@ -1,0 +1,25 @@
+databaseChangeLog:
+  - changeSet:
+      id: 0001
+      author: ropfoo
+      changes:
+        - createTable:
+            tableName: taxonomy_trees
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: root
+                  type: varchar(255)
+                  constraints:
+                    nullable: true
+              - column:
+                  name: children
+                  type: varchar(1024)
+                  constraints:
+                    nullable: true

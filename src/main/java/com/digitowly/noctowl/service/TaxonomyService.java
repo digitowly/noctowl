@@ -37,7 +37,7 @@ public class TaxonomyService {
 
     private TaxonomyResponse findAnimal(String wikibaseId, WikimediaPageDto page) {
         var isAnimal = wikidataTaxonChecker.isTaxon(TaxonType.ANIMAL, wikibaseId);
-        if (!isAnimal) { return null; }
+        if (!isAnimal) return null;
         return new TaxonomyResponse(TaxonType.ANIMAL, getWikipediaInfo(page));
     }
 

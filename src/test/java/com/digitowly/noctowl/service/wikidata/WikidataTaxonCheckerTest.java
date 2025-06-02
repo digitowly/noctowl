@@ -2,13 +2,21 @@ package com.digitowly.noctowl.service.wikidata;
 
 import com.digitowly.noctowl.client.WikidataClient;
 import com.digitowly.noctowl.model.enums.TaxonType;
-import com.digitowly.noctowl.repository.InMemoryTaxonomyTreeRepository;
+import com.digitowly.noctowl.repository.taxonomytree.TaxonomyTreeRepository;
+import com.digitowly.noctowl.service.storage.TaxonomyTreeStorageHandler;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.DynamicPropertyRegistry;
+import org.springframework.test.context.DynamicPropertySource;
 import org.springframework.test.util.ReflectionTestUtils;
 import org.springframework.test.web.client.MockRestServiceServer;
 import org.springframework.web.client.RestTemplate;
+import org.testcontainers.containers.PostgreSQLContainer;
+import org.testcontainers.junit.jupiter.Container;
+import org.testcontainers.junit.jupiter.Testcontainers;
 
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -20,9 +28,28 @@ import static org.springframework.test.web.client.match.MockRestRequestMatchers.
 import static org.springframework.test.web.client.response.MockRestResponseCreators.withSuccess;
 
 
+@SpringBootTest
+@Testcontainers
 class WikidataTaxonCheckerTest {
 
     private final String baseUrl = "https://www.wikidata.org";
+
+    @Autowired
+    private TaxonomyTreeRepository treeRepository;
+
+    @Container
+    static PostgreSQLContainer<?> postgres = new PostgreSQLContainer<>("postgres:15")
+            .withDatabaseName("testdb")
+            .withUsername("test")
+            .withPassword("test");
+
+    @DynamicPropertySource
+    static void overrideProps(DynamicPropertyRegistry registry) {
+        registry.add("spring.datasource.url", postgres::getJdbcUrl);
+        registry.add("spring.datasource.username", postgres::getUsername);
+        registry.add("spring.datasource.password", postgres::getPassword);
+        registry.add("spring.datasource.driver-class-name", postgres::getDriverClassName);
+    }
 
     private MockRestServiceServer mockServer;
     private WikidataTaxonChecker checker;
@@ -33,11 +60,12 @@ class WikidataTaxonCheckerTest {
         mockServer = MockRestServiceServer.bindTo(restTemplate).build();
         var wikidataClient = new WikidataClient(restTemplate);
         ReflectionTestUtils.setField(wikidataClient, "baseUrl", baseUrl);
+        var storageHandler = new TaxonomyTreeStorageHandler(treeRepository);
 
         this.checker = new WikidataTaxonChecker(
                 new ObjectMapper(),
                 wikidataClient,
-                new InMemoryTaxonomyTreeRepository()
+                storageHandler
         );
     }
 

@@ -3,8 +3,7 @@ package com.digitowly.noctowl.service.wikidata;
 import com.digitowly.noctowl.client.WikidataClient;
 import com.digitowly.noctowl.model.enums.TaxonType;
 import com.digitowly.noctowl.model.enums.wikidata.WikidataProperty;
-import com.digitowly.noctowl.model.enums.wikidata.WikidataQID;
-import com.digitowly.noctowl.repository.TaxonomyTreeRepository;
+import com.digitowly.noctowl.service.storage.TaxonomyTreeStorageHandler;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.AllArgsConstructor;
@@ -22,29 +21,23 @@ public class WikidataTaxonChecker {
 
     private final ObjectMapper objectMapper;
     private final WikidataClient wikidataClient;
-    private final TaxonomyTreeRepository taxonomyTreeRepository;
+    private final TaxonomyTreeStorageHandler storageHandler;
 
     public boolean isTaxon(TaxonType taxonType, String wikidataId) {
-        if (isCacheHit(taxonType, wikidataId)) return true;
+        if (storageHandler.isTaxonCached(taxonType, wikidataId)) return true;
 
-        var targetQID = switch (taxonType) {
-            case ANIMAL -> WikidataQID.ANIMALIA;
-            default -> null;
-        };
-        if (targetQID == null) return false;
+        var root = taxonType.getWikidataQID();
+        if (root == null) return false;
 
         Set<String> visitedTaxonIds = new LinkedHashSet<>();
-        log.info("Checking if Wikidata entity {} is an animal (descendant of {}).", wikidataId, targetQID);
-        boolean result = isWikidataTaxon(taxonType, wikidataId, targetQID.getId(), visitedTaxonIds);
+        log.info("Checking if Wikidata entity {} is an animal (descendant of {}).", wikidataId, root);
+        boolean result = isWikidataTaxon(taxonType, wikidataId, root.getId(), visitedTaxonIds);
         log.info("Result for {}: {}", wikidataId, result ? "IS an animal" : "NOT an animal");
         log.info("Visited taxon path: {}", visitedTaxonIds);
 
         if (!result) return false;
 
-        // Cache all visited taxa as animal or non-animal
-        switch (taxonType) {
-            case ANIMAL: taxonomyTreeRepository.addWikiAnimalIds(visitedTaxonIds);
-        }
+        storageHandler.storeChildren(root, visitedTaxonIds);
         return true;
     }
 
@@ -56,7 +49,7 @@ public class WikidataTaxonChecker {
     ) {
         visitedIds.add(currentId);
 
-        if (isCacheHit(taxonType, currentId)) return true;
+        if (storageHandler.isTaxonCached(taxonType, currentId)) return true;
         if (currentId.equals(targetId)) return true;
 
         try {
@@ -105,14 +98,5 @@ public class WikidataTaxonChecker {
         }
 
         return false;
-    }
-
-    private boolean isCacheHit(@NotNull TaxonType taxonType, String wikidataId) {
-        boolean isCached = switch (taxonType) {
-            case ANIMAL -> taxonomyTreeRepository.hasWikiAnimalId(wikidataId);
-            default -> false;
-        };
-        if (isCached) log.info("Cache hit: {} is a known {}.", wikidataId, taxonType);
-        return isCached;
     }
 }
