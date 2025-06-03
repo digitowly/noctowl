@@ -2,6 +2,7 @@ package com.digitowly.noctowl.service;
 
 import com.digitowly.noctowl.client.WikimediaClient;
 import com.digitowly.noctowl.client.WikipediaClient;
+import com.digitowly.noctowl.model.dto.TaxonomyEntry;
 import com.digitowly.noctowl.model.entity.TaxonomyEntryEntity;
 import com.digitowly.noctowl.model.wikidata.WikimediaPageDto;
 import com.digitowly.noctowl.model.dto.TaxonomyResponse;
@@ -13,6 +14,10 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 
 @Service
 @Slf4j
@@ -26,31 +31,37 @@ public class TaxonomyService {
     private final TaxonomyEntryRepository repository;
     private final ObjectMapper objectMapper;
 
-    public TaxonomyResponse find(TaxonType type, String name) {
+    public TaxonomyResponse find(TaxonType type, String name, Integer entryLimit) {
         var id =  type + "-" + name;
         var cachedResult = getStoredResponse(id);
         if (cachedResult != null) return cachedResult;
 
         var pagesResponse = wikimediaClient.getPages(name);
         log.info("Searching wiki pages...");
+        List<TaxonomyEntry> entries = new ArrayList<>();
+        var limit = entryLimit != null ? entryLimit : 3;
         for (WikimediaPageDto page : pagesResponse.pages()) {
+            if (entries.size() >= limit) break;
             var summary = wikipediaClient.getSummary(page.key());
-            var response = findByTaxonType(type, summary.wikibase_item(), page);
-            if (response == null) continue;
-            storeResponse(id, response);
-            return response;
+            if (summary == null) continue;
+            var entry = findTaxonomyEntryByType(type, summary.wikibase_item(), page);
+            if (entry == null) continue;
+            entries.add(entry);
         }
-        return null;
+        if (entries.isEmpty()) return null;
+        var response = new TaxonomyResponse(type, entries);
+        storeResponse(id, response);
+        return response;
     }
 
-    private TaxonomyResponse findByTaxonType(TaxonType type, String wikibaseId, WikimediaPageDto page) {
+    private TaxonomyEntry findTaxonomyEntryByType(TaxonType type, String wikibaseId, WikimediaPageDto page) {
         var isTaxon = wikidataTaxonChecker.isTaxon(type, wikibaseId);
         if (!isTaxon) return null;
-        return new TaxonomyResponse(type, getWikipediaInfo(page));
+        return new TaxonomyEntry(type, getWikipediaInfo(page));
     }
 
-    private TaxonomyResponse.WikipediaInfo getWikipediaInfo(WikimediaPageDto page) {
-        return new TaxonomyResponse.WikipediaInfo(
+    private TaxonomyEntry.WikipediaInfo getWikipediaInfo(WikimediaPageDto page) {
+        return new TaxonomyEntry.WikipediaInfo(
                 page.id(),
                 page.title(),
                 page.key(),

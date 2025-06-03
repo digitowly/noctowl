@@ -16,11 +16,11 @@ public class ClassificationController {
 
     @GetMapping(value = "/animals/find")
     public TaxonomyResponse findAnimal(@RequestParam(name = "name") String name) {
-        return taxonomyService.find(TaxonType.ANIMAL, name);
+        return taxonomyService.find(TaxonType.ANIMAL, name, null);
     }
 
     @GetMapping(value = "/plants/find")
     public TaxonomyResponse findPlant(@RequestParam(name = "name") String name) {
-        return taxonomyService.find(TaxonType.PLANT, name);
+        return taxonomyService.find(TaxonType.PLANT, name, null);
     }
 }

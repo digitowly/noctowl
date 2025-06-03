@@ -53,10 +53,10 @@ class TaxonomyServiceTest {
         when(wikipediaClient.getSummary("Cat")).thenReturn(summaryDto);
         when(wikidataTaxonChecker.isTaxon(TaxonType.ANIMAL, wikidataId)).thenReturn(true);
 
-        var result = taxonomyService.find(TaxonType.ANIMAL, name);
+        var result = taxonomyService.find(TaxonType.ANIMAL, name, null);
         assertThat(result).isNotNull();
         assertThat(result.type()).isEqualTo(TaxonType.ANIMAL);
-        assertThat(result.wikipediaInfo().title()).isEqualTo(name);
-        assertThat(result.wikipediaInfo().key()).isEqualTo(key);
+        assertThat(result.entries().get(0).wikipediaInfo().title()).isEqualTo(name);
+        assertThat(result.entries().get(0).wikipediaInfo().key()).isEqualTo(key);
     }
 }

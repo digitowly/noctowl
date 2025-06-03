@@ -23,6 +23,11 @@ public class WikipediaClient {
         var encodedTitle = URLEncoder.encode(title, StandardCharsets.UTF_8);
         var url = baseUrl + "/page/summary/" + encodedTitle;
         log.info("Fetching Wikipedia Summary for title {} on {}", title, url);
-        return restTemplate.getForObject(url, WikipediaSummaryDto.class);
+        try {
+            return restTemplate.getForObject(url, WikipediaSummaryDto.class);
+        } catch (Exception e) {
+            log.error("Failed to fetch Wikipedia Summary for title {} on {}", title, url, e);
+            return null;
+        }
     }
 }
