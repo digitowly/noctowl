@@ -6,7 +6,9 @@ import com.digitowly.noctowl.model.wikidata.WikimediaPageDto;
 import com.digitowly.noctowl.model.wikidata.WikimediaPagesDto;
 import com.digitowly.noctowl.model.wikidata.WikipediaSummaryDto;
 import com.digitowly.noctowl.model.enums.TaxonType;
+import com.digitowly.noctowl.repository.TaxonomyEntryRepository;
 import com.digitowly.noctowl.service.wikidata.WikidataTaxonChecker;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -28,7 +30,15 @@ class TaxonomyServiceTest {
         this.wikipediaClient = mock(WikipediaClient.class);
         this.wikimediaClient = mock(WikimediaClient.class);
         this.wikidataTaxonChecker = mock(WikidataTaxonChecker.class);
-        this.taxonomyService = new TaxonomyService(wikipediaClient, wikimediaClient, wikidataTaxonChecker);
+        var taxonomyEntryRepository = mock(TaxonomyEntryRepository.class);
+
+        this.taxonomyService = new TaxonomyService(
+                wikipediaClient,
+                wikimediaClient,
+                wikidataTaxonChecker,
+                taxonomyEntryRepository,
+                new ObjectMapper()
+        );
     }
 
     @Test

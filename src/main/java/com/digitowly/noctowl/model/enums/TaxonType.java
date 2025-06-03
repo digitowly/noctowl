@@ -7,8 +7,8 @@ import lombok.RequiredArgsConstructor;
 @Getter
 @RequiredArgsConstructor
 public enum TaxonType {
-    ANIMAL(WikidataQID.ANIMALIA);
-//    PLANT,
+    ANIMAL(WikidataQID.ANIMALIA),
+    PLANT(WikidataQID.PLANTAE);
 //    FUNGI,
 
     private final WikidataQID wikidataQID;

@@ -1,0 +1,19 @@
+databaseChangeLog:
+  - changeSet:
+      id: 0002
+      author: ropfoo
+      changes:
+        - createTable:
+            tableName: taxonomy_entries
+            columns:
+              - column:
+                  name: id
+                  type: varchar(255)
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: response
+                  type: text
+                  constraints:
+                    nullable: true

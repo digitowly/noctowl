@@ -15,9 +15,12 @@ public class ClassificationController {
     private final TaxonomyService taxonomyService;
 
     @GetMapping(value = "/animals/find")
-    public TaxonomyResponse findAnimal(
-            @RequestParam(name = "name") String name
-    ) {
+    public TaxonomyResponse findAnimal(@RequestParam(name = "name") String name) {
         return taxonomyService.find(TaxonType.ANIMAL, name);
+    }
+
+    @GetMapping(value = "/plants/find")
+    public TaxonomyResponse findPlant(@RequestParam(name = "name") String name) {
+        return taxonomyService.find(TaxonType.PLANT, name);
     }
 }

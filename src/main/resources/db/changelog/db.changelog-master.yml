@@ -1,3 +1,5 @@
 databaseChangeLog:
   - include:
       file: db/changelog/0001-create-taxonomy-tree-table.yml
+  - include:
+      file: db/changelog/0002-create-taxonomy-entry-table.yml

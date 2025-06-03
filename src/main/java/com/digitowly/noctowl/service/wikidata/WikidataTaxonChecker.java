@@ -23,16 +23,16 @@ public class WikidataTaxonChecker {
     private final WikidataClient wikidataClient;
     private final TaxonomyTreeStorageHandler storageHandler;
 
-    public boolean isTaxon(TaxonType taxonType, String wikidataId) {
-        if (storageHandler.isTaxonCached(taxonType, wikidataId)) return true;
+    public boolean isTaxon(TaxonType type, String wikidataId) {
+        if (storageHandler.isTaxonCached(type, wikidataId)) return true;
 
-        var root = taxonType.getWikidataQID();
+        var root = type.getWikidataQID();
         if (root == null) return false;
 
         Set<String> visitedTaxonIds = new LinkedHashSet<>();
-        log.info("Checking if Wikidata entity {} is an animal (descendant of {}).", wikidataId, root);
-        boolean result = isWikidataTaxon(taxonType, wikidataId, root.getId(), visitedTaxonIds);
-        log.info("Result for {}: {}", wikidataId, result ? "IS an animal" : "NOT an animal");
+        log.info("Checking if Wikidata entity {} is of type {} (descendant of {}).", wikidataId, type, root);
+        boolean result = isWikidataTaxon(type, wikidataId, root.getId(), visitedTaxonIds);
+        log.info("Result for {}: {}", wikidataId, result ? "IS requested taxon" : "NOT requested taxon");
         log.info("Visited taxon path: {}", visitedTaxonIds);
 
         if (!result) return false;
