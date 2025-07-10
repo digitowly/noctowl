@@ -19,7 +19,7 @@ import static org.springframework.test.web.client.response.MockRestResponseCreat
 
 class WikidataClientTest {
 
-    private final String baseUrl = "https://www.wikidata.org/wiki";
+    private final String baseUrl = "https://www.wikidata.org";
 
     private MockRestServiceServer mockServer;
     private WikidataClient wikidataClient;
