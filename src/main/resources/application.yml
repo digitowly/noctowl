@@ -5,6 +5,7 @@ spring:
     enabled: true
     change-log: classpath:/db/changelog/db.changelog-master.yml
   datasource:
+#    url: jdbc:postgresql://host.docker.internal:5432/noctowl
     url: jdbc:postgresql://localhost:5432/noctowl
     username: root
     password: root-password
@@ -19,3 +20,6 @@ wikimedia:
   user-agent: noctowl
 wikidata:
   base-url: https://www.wikidata.org
+
+gbif:
+  base-url: https://api.gbif.org/v2
