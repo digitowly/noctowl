@@ -36,23 +36,25 @@ class WikimediaClientTest {
     void getPages() {
         String title = "blue whale";
         String expectedJson = """
-            {
-              "pages": [
-                {
-                 "id": 12345,
-                 "title": "Blue whale",
-                 "key": "Blue_whale",
-                 "description": "Baleen whale, largest animal ever known"
-                },
-                {
-                 "id": 67890,
-                 "title": "Blue whale project",
-                 "key": "Blue_whale_project",
-                 "description": "Some random project"
-                }
-              ]
-            }
-        """;
+                    {
+                      "pages": [
+                        {
+                         "id": 12345,
+                         "title": "Blue whale",
+                         "key": "Blue_whale",
+                         "excerpt": "blue whale (Balaenoptera musculus)",
+                         "description": "Baleen whale, largest animal ever known"
+                        },
+                        {
+                         "id": 67890,
+                         "title": "Blue whale project",
+                         "key": "Blue_whale_project",
+                         "excerpt": "Some project",
+                         "description": "Some random project"
+                        }
+                      ]
+                    }
+                """;
 
         String expectedUrl = baseUrl + "/wikipedia/en/search/page?q=blue+whale";
 
@@ -64,8 +66,8 @@ class WikimediaClientTest {
         var result = wikimediaClient.getPages(title);
         var expected = new WikimediaPagesDto(
                 List.of(
-                        new WikimediaPageDto(12345, "Blue_whale", "Blue whale", "","Baleen whale, largest animal ever known"),
-                        new WikimediaPageDto(67890, "Blue_whale_project", "Blue whale project", "","Some random project")
+                        new WikimediaPageDto(12345, "Blue_whale", "Blue whale", "blue whale (Balaenoptera musculus)", "Baleen whale, largest animal ever known"),
+                        new WikimediaPageDto(67890, "Blue_whale_project", "Blue whale project", "Some project", "Some random project")
                 )
         );
         assertEquals(result, expected);

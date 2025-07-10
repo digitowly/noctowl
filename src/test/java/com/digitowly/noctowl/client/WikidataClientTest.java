@@ -19,7 +19,7 @@ import static org.springframework.test.web.client.response.MockRestResponseCreat
 
 class WikidataClientTest {
 
-    private final String baseUrl = "https://www.wikidata.org/wiki";
+    private final String baseUrl = "https://www.wikidata.org";
 
     private MockRestServiceServer mockServer;
     private WikidataClient wikidataClient;
@@ -38,7 +38,7 @@ class WikidataClientTest {
         Path path = Paths.get("src/test/resources/mock/wikidata/blue_whale/wikidata_entity_Q42196_blue_whale.json");
         String expectedJson = Files.readString(path);
 
-        String expectedUrl = baseUrl + "/Special:EntityData/Q42196.json";
+        String expectedUrl = baseUrl + "/wiki/Special:EntityData/Q42196.json";
 
         mockServer
                 .expect(requestTo(expectedUrl))

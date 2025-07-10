@@ -5,7 +5,8 @@ import lombok.Builder;
 
 public record TaxonomyEntry(
         TaxonType type,
-        WikipediaInfo wikipediaInfo
+        WikipediaInfo wikipedia,
+        GbifInfo gbif
 ) {
     @Builder
     public record WikipediaInfo(
@@ -14,5 +15,14 @@ public record TaxonomyEntry(
             String key,
             String scientificName,
             String description
-    ) {}
+    ) {
+    }
+
+    @Builder
+    public record GbifInfo(
+            String taxonKey,
+            String name,
+            String canonicalName
+    ) {
+    }
 }
