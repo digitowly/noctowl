@@ -64,8 +64,8 @@ class WikimediaClientTest {
         var result = wikimediaClient.getPages(title);
         var expected = new WikimediaPagesDto(
                 List.of(
-                        new WikimediaPageDto(12345, "Blue_whale", "Blue whale", "Baleen whale, largest animal ever known"),
-                        new WikimediaPageDto(67890, "Blue_whale_project", "Blue whale project", "Some random project")
+                        new WikimediaPageDto(12345, "Blue_whale", "Blue whale", "","Baleen whale, largest animal ever known"),
+                        new WikimediaPageDto(67890, "Blue_whale_project", "Blue whale project", "","Some random project")
                 )
         );
         assertEquals(result, expected);

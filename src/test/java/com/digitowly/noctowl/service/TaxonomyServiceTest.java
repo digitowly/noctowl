@@ -46,7 +46,7 @@ class TaxonomyServiceTest {
         String name = "Cat";
         String key = "Cat";
         String wikidataId = "Q146";
-        var pageDto = new WikimediaPageDto(1234, key, name, "A cat");
+        var pageDto = new WikimediaPageDto(1234, key, name,"", "A cat");
         var pagesDto = new WikimediaPagesDto(List.of(pageDto));
         var summaryDto = new WikipediaSummaryDto(name, wikidataId);
         when(wikimediaClient.getPages(name)).thenReturn(pagesDto);
