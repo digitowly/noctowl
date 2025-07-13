@@ -6,6 +6,7 @@ import com.digitowly.noctowl.client.WikipediaClient;
 import com.digitowly.noctowl.model.dto.TaxonomyEntry;
 import com.digitowly.noctowl.model.dto.gbif.GbifSpeciesResponseDto;
 import com.digitowly.noctowl.model.entity.TaxonomyEntryEntity;
+import com.digitowly.noctowl.model.enums.LanguageType;
 import com.digitowly.noctowl.model.wikidata.WikimediaPageDto;
 import com.digitowly.noctowl.model.dto.TaxonomyResponse;
 import com.digitowly.noctowl.model.enums.TaxonType;
@@ -21,7 +22,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 @Service
 @Slf4j
@@ -30,8 +30,10 @@ public class TaxonomyService {
 
     private final WikipediaClient wikipediaClient;
     private final WikimediaClient wikimediaClient;
-    private final WikidataTaxonChecker wikidataTaxonChecker;
     private final GbifClient gbifClient;
+
+    private final TranslationService translationService;
+    private final WikidataTaxonChecker wikidataTaxonChecker;
 
     private final TaxonomyEntryRepository repository;
     private final ObjectMapper objectMapper;
@@ -47,7 +49,7 @@ public class TaxonomyService {
         var limit = entryLimit != null ? entryLimit : 1;
         for (WikimediaPageDto page : pagesResponse.pages()) {
             if (entries.size() >= limit) break;
-            var summary = wikipediaClient.getSummary(page.key());
+            var summary = wikipediaClient.getSummary(page.key(), LanguageType.EN);
             if (summary == null) continue;
             var entry = findTaxonomyEntryByType(type, summary.wikibase_item(), page);
             if (entry == null) continue;
@@ -65,7 +67,7 @@ public class TaxonomyService {
 
         var potentialLatinName = LatinNameExtractor.extract(page.excerpt());
         var gbifResult = gbifClient.getSpecies(potentialLatinName);
-        
+
         var isValidResult = GbifSpeciesValidator.validate(gbifResult);
         if (!isValidResult) return null;
 
@@ -88,12 +90,14 @@ public class TaxonomyService {
             WikimediaPageDto page,
             String scientificName
     ) {
+        var translations = translationService.getTranslations(scientificName);
         return TaxonomyEntry.WikipediaInfo.builder()
                 .id(page.id())
                 .title(page.title())
                 .key(page.key())
                 .scientificName(scientificName)
                 .description(page.description())
+                .lang(translations)
                 .build();
     }
 

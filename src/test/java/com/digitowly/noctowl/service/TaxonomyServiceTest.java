@@ -4,6 +4,7 @@ import com.digitowly.noctowl.client.GbifClient;
 import com.digitowly.noctowl.client.WikimediaClient;
 import com.digitowly.noctowl.client.WikipediaClient;
 import com.digitowly.noctowl.model.dto.gbif.GbifSpeciesResponseDto;
+import com.digitowly.noctowl.model.enums.LanguageType;
 import com.digitowly.noctowl.model.wikidata.WikimediaPageDto;
 import com.digitowly.noctowl.model.wikidata.WikimediaPagesDto;
 import com.digitowly.noctowl.model.wikidata.WikipediaSummaryDto;
@@ -27,21 +28,26 @@ class TaxonomyServiceTest {
     private WikipediaClient wikipediaClient;
     private WikimediaClient wikimediaClient;
     private GbifClient gbifClient;
+
+    private TranslationService translationService;
     private WikidataTaxonChecker wikidataTaxonChecker;
 
     @BeforeEach
     void setUp() {
         this.wikipediaClient = mock(WikipediaClient.class);
         this.wikimediaClient = mock(WikimediaClient.class);
-        this.wikidataTaxonChecker = mock(WikidataTaxonChecker.class);
         this.gbifClient = mock(GbifClient.class);
+
+        this.translationService = mock(TranslationService.class);
+        this.wikidataTaxonChecker = mock(WikidataTaxonChecker.class);
         var taxonomyEntryRepository = mock(TaxonomyEntryRepository.class);
 
         this.taxonomyService = new TaxonomyService(
                 wikipediaClient,
                 wikimediaClient,
-                wikidataTaxonChecker,
                 gbifClient,
+                translationService,
+                wikidataTaxonChecker,
                 taxonomyEntryRepository,
                 new ObjectMapper()
         );
@@ -73,7 +79,7 @@ class TaxonomyServiceTest {
                 )
         );
         when(wikimediaClient.getPages(name)).thenReturn(pagesDto);
-        when(wikipediaClient.getSummary("Cat")).thenReturn(summaryDto);
+        when(wikipediaClient.getSummary("Cat", LanguageType.EN)).thenReturn(summaryDto);
         when(wikidataTaxonChecker.isTaxon(TaxonType.ANIMAL, wikidataId)).thenReturn(true);
         when(gbifClient.getSpecies("Felis catus")).thenReturn(speciesResponseDto);
 
