@@ -6,12 +6,15 @@ import org.springframework.test.util.ReflectionTestUtils;
 import org.springframework.test.web.client.MockRestServiceServer;
 import org.springframework.web.client.RestTemplate;
 
+import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.springframework.test.web.client.match.MockRestRequestMatchers.requestTo;
+import static org.springframework.test.web.client.response.MockRestResponseCreators.withException;
 import static org.springframework.test.web.client.response.MockRestResponseCreators.withSuccess;
 
 class GbifClientTest {
@@ -50,5 +53,16 @@ class GbifClientTest {
         // diagnostics
         assertEquals("EXACT", result.diagnostics().matchType());
         assertEquals(99, result.diagnostics().confidence());
+    }
+
+    @Test
+    void getSpecies_Error() {
+        String expectedUrl = baseUrl + "/species/match?genericName=boom";
+        mockServer
+                .expect(requestTo(expectedUrl))
+                .andRespond(withException(new IOException()));
+        var result = gbifClient.getSpecies("boom");
+        ;
+        assertNull(result);
     }
 }

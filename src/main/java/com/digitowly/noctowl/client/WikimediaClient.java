@@ -30,6 +30,7 @@ public class WikimediaClient {
         var encodedTitle = URLEncoder.encode(title, StandardCharsets.UTF_8);
         var url = baseUrl + "/wikipedia/en/search/page?q=" + encodedTitle;
         log.info("Searching for wikipedia pages with the term {} on {}", title, url);
+        
         HttpHeaders headers = new HttpHeaders();
         headers.set("User-Agent", userAgent);
 

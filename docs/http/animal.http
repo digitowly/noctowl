@@ -1,0 +1,2 @@
+### GET animal
+{{baseUrl}}/animals/find?name=owl

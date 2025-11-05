@@ -18,7 +18,7 @@ import static org.springframework.test.web.client.response.MockRestResponseCreat
 class WikimediaClientTest {
 
     private final String baseUrl = "https://api.wikimedia.org/core/v1";
-    private final String userAgent = "noctowl";
+    private final String userAgent = "noctowl-mock";
 
     private MockRestServiceServer mockServer;
     private WikimediaClient wikimediaClient;
@@ -60,7 +60,7 @@ class WikimediaClientTest {
 
         mockServer
                 .expect(requestTo(expectedUrl))
-                .andExpect(header("User-Agent", userAgent)) // check User-Agent
+                .andExpect(header("User-Agent", userAgent))
                 .andRespond(withSuccess(expectedJson, org.springframework.http.MediaType.APPLICATION_JSON));
 
         var result = wikimediaClient.getPages(title);

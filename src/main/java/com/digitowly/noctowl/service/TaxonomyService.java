@@ -39,7 +39,7 @@ public class TaxonomyService {
     private final ObjectMapper objectMapper;
 
     public TaxonomyResponse find(TaxonType type, String name, Integer entryLimit) {
-        var id = type + "-" + name;
+        var id = createId(type, name, entryLimit);
         var cachedResult = getStoredResponse(id);
         if (cachedResult != null) return cachedResult;
 
@@ -123,6 +123,11 @@ public class TaxonomyService {
         } catch (JsonProcessingException e) {
             log.error(e.getMessage());
         }
+    }
+
+    private String createId(TaxonType type, String name, Integer entryLimit) {
+        if (entryLimit == null) return type + "-" + name;
+        return type + "-" + name + "-" + entryLimit;
     }
 
 }

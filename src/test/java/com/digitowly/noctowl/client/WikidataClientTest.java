@@ -8,18 +8,21 @@ import org.springframework.test.util.ReflectionTestUtils;
 import org.springframework.test.web.client.MockRestServiceServer;
 import org.springframework.web.client.RestTemplate;
 
+import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.*;
+import static org.springframework.test.web.client.match.MockRestRequestMatchers.header;
 import static org.springframework.test.web.client.match.MockRestRequestMatchers.requestTo;
+import static org.springframework.test.web.client.response.MockRestResponseCreators.withException;
 import static org.springframework.test.web.client.response.MockRestResponseCreators.withSuccess;
 
 class WikidataClientTest {
 
     private final String baseUrl = "https://www.wikidata.org";
+    private final String userAgent = "noctowl-mock";
 
     private MockRestServiceServer mockServer;
     private WikidataClient wikidataClient;
@@ -30,6 +33,7 @@ class WikidataClientTest {
         mockServer = MockRestServiceServer.bindTo(restTemplate).build();
         wikidataClient = new WikidataClient(restTemplate);
         ReflectionTestUtils.setField(wikidataClient, "baseUrl", baseUrl);
+        ReflectionTestUtils.setField(wikidataClient, "userAgent", userAgent);
     }
 
     @Test
@@ -42,6 +46,7 @@ class WikidataClientTest {
 
         mockServer
                 .expect(requestTo(expectedUrl))
+                .andExpect(header("User-Agent", userAgent))
                 .andRespond(withSuccess(expectedJson, org.springframework.http.MediaType.APPLICATION_JSON));
 
         var result = wikidataClient.getEntity(entityId);
@@ -63,6 +68,7 @@ class WikidataClientTest {
 
         mockServer
                 .expect(requestTo(expectedUrl))
+                .andExpect(header("User-Agent", userAgent))
                 .andRespond(withSuccess(expectedJson, org.springframework.http.MediaType.APPLICATION_JSON));
 
         var result = wikidataClient.getClaims(entityId);
@@ -72,5 +78,16 @@ class WikidataClientTest {
         var expected = root.at("/claims/P171").asText();
 
         assertNotNull(expected);
+    }
+
+    @Test
+    void getEntity_Error() {
+        String entityId = "Q42196";
+        String expectedUrl = baseUrl + "/wiki/Special:EntityData/Q42196.json";
+        mockServer
+                .expect(requestTo(expectedUrl))
+                .andRespond(withException(new IOException()));
+        var result = wikidataClient.getEntity(entityId);
+        assertNull(result);
     }
 }
