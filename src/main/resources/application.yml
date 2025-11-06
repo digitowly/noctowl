@@ -17,7 +17,7 @@ wikipedia:
   base-url: https://%s.wikipedia.org/api/rest_v1
 wikimedia:
   base-url: https://api.wikimedia.org/core/v1
-  user-agent: noctowl
+  user-agent: dev
 wikidata:
   base-url: https://www.wikidata.org
 

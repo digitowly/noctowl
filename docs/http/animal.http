@@ -1,2 +1,5 @@
 ### GET animal
-{{baseUrl}}/animals/find?name=owl
+{{baseUrl}}/animals/find?name=tawny owl
+
+### Scrape animal
+{{baseUrl}}/animals/scrape?name=Strix aluco
