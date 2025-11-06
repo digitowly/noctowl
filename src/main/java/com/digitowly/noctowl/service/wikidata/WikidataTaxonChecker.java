@@ -90,6 +90,8 @@ public class WikidataTaxonChecker {
 
         for (JsonNode claim : propertyClaims) {
             String nextId = claim.at("/mainsnak/datavalue/value/id").asText(null);
+
+            // if there is no next id, or it is already visited -> skip
             if (nextId == null || visitedIds.contains(nextId)) continue;
 
             if (isWikidataTaxon(taxonType, nextId, targetId, visitedIds)) {

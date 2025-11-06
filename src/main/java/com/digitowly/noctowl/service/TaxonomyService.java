@@ -125,7 +125,8 @@ public class TaxonomyService {
         }
     }
 
-    private String createId(TaxonType type, String name, Integer entryLimit) {
+    private String createId(TaxonType type, String input, Integer entryLimit) {
+        var name = input.toLowerCase().trim().replaceAll(" ", "-");
         if (entryLimit == null) return type + "-" + name;
         return type + "-" + name + "-" + entryLimit;
     }
