@@ -1,5 +1,3 @@
-### GET animal
-{{baseUrl}}/animals/find?name=tawny owl
-
-### Scrape animal
-{{baseUrl}}/animals/scrape?name=Strix aluco
+### Get animal by unspecifc name
+// @timeout 6000
+GET {{baseUrl}}/en/animals/find/unspecific?name=tawny owl
