@@ -1,5 +1,6 @@
 package com.digitowly.noctowl.client;
 
+import com.digitowly.noctowl.model.enums.LanguageType;
 import com.digitowly.noctowl.model.wikidata.WikimediaPageDto;
 import com.digitowly.noctowl.model.wikidata.WikimediaPagesDto;
 import org.junit.jupiter.api.BeforeEach;
@@ -63,7 +64,7 @@ class WikimediaClientTest {
                 .andExpect(header("User-Agent", userAgent))
                 .andRespond(withSuccess(expectedJson, org.springframework.http.MediaType.APPLICATION_JSON));
 
-        var result = wikimediaClient.getPages(title);
+        var result = wikimediaClient.getPages(title, LanguageType.EN);
         var expected = new WikimediaPagesDto(
                 List.of(
                         new WikimediaPageDto(12345, "Blue_whale", "Blue whale", "blue whale (Balaenoptera musculus)", "Baleen whale, largest animal ever known"),

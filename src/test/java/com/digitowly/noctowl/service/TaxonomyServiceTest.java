@@ -78,12 +78,12 @@ class TaxonomyServiceTest {
                         99
                 )
         );
-        when(wikimediaClient.getPages(name)).thenReturn(pagesDto);
+        when(wikimediaClient.getPages(name, LanguageType.EN)).thenReturn(pagesDto);
         when(wikipediaClient.getSummary("Cat", LanguageType.EN)).thenReturn(summaryDto);
         when(wikidataTaxonChecker.isTaxon(TaxonType.ANIMAL, wikidataId)).thenReturn(true);
         when(gbifClient.getSpecies("Felis catus")).thenReturn(speciesResponseDto);
 
-        var result = taxonomyService.find(TaxonType.ANIMAL, name, null);
+        var result = taxonomyService.find(TaxonType.ANIMAL, name, null, LanguageType.EN);
         assertThat(result).isNotNull();
         assertEquals(TaxonType.ANIMAL, result.type());
 

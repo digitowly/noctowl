@@ -38,18 +38,23 @@ public class TaxonomyService {
     private final TaxonomyEntryRepository repository;
     private final ObjectMapper objectMapper;
 
-    public TaxonomyResponse find(TaxonType type, String name, Integer entryLimit) {
-        var id = createId(type, name, entryLimit);
+    public TaxonomyResponse find(
+            TaxonType type,
+            String name,
+            Integer entryLimit,
+            LanguageType langType
+    ) {
+        var id = createId(type, name, entryLimit, langType);
         var cachedResult = getStoredResponse(id);
         if (cachedResult != null) return cachedResult;
 
-        var pagesResponse = wikimediaClient.getPages(name);
+        var pagesResponse = wikimediaClient.getPages(name, langType);
         log.info("Searching wiki pages...");
         List<TaxonomyEntry> entries = new ArrayList<>();
         var limit = entryLimit != null ? entryLimit : 1;
         for (WikimediaPageDto page : pagesResponse.pages()) {
             if (entries.size() >= limit) break;
-            var summary = wikipediaClient.getSummary(page.key(), LanguageType.EN);
+            var summary = wikipediaClient.getSummary(page.key(), langType);
             if (summary == null) continue;
             var entry = findTaxonomyEntryByType(type, summary.wikibase_item(), page);
             if (entry == null) continue;
@@ -125,10 +130,10 @@ public class TaxonomyService {
         }
     }
 
-    private String createId(TaxonType type, String input, Integer entryLimit) {
+    private String createId(TaxonType type, String input, Integer entryLimit, LanguageType langType) {
         var name = input.toLowerCase().trim().replaceAll(" ", "-");
         if (entryLimit == null) return type + "-" + name;
-        return type + "-" + name + "-" + entryLimit;
+        return type + "-" + name + "-" + langType.getName() + "-" + entryLimit;
     }
 
 }
