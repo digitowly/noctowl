@@ -5,12 +5,15 @@ import com.digitowly.noctowl.client.WikimediaClient;
 import com.digitowly.noctowl.client.WikipediaClient;
 import com.digitowly.noctowl.model.dto.gbif.GbifSpeciesResponseDto;
 import com.digitowly.noctowl.model.enums.LanguageType;
+import com.digitowly.noctowl.model.enums.TaxonCheckStrategy;
 import com.digitowly.noctowl.model.wikidata.WikimediaPageDto;
 import com.digitowly.noctowl.model.wikidata.WikimediaPagesDto;
 import com.digitowly.noctowl.model.wikidata.WikipediaSummaryDto;
 import com.digitowly.noctowl.model.enums.TaxonType;
 import com.digitowly.noctowl.repository.TaxonomyEntryRepository;
+import com.digitowly.noctowl.service.dto.FindTaxonomyParams;
 import com.digitowly.noctowl.service.wikidata.WikidataTaxonChecker;
+import com.digitowly.noctowl.service.wikipedia.WikipediaTaxonChecker;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -31,6 +34,7 @@ class TaxonomyServiceTest {
 
     private TranslationService translationService;
     private WikidataTaxonChecker wikidataTaxonChecker;
+    private WikipediaTaxonChecker wikipediaTaxonChecker;
 
     @BeforeEach
     void setUp() {
@@ -40,6 +44,7 @@ class TaxonomyServiceTest {
 
         this.translationService = mock(TranslationService.class);
         this.wikidataTaxonChecker = mock(WikidataTaxonChecker.class);
+        this.wikipediaTaxonChecker = mock(WikipediaTaxonChecker.class);
         var taxonomyEntryRepository = mock(TaxonomyEntryRepository.class);
 
         this.taxonomyService = new TaxonomyService(
@@ -48,26 +53,95 @@ class TaxonomyServiceTest {
                 gbifClient,
                 translationService,
                 wikidataTaxonChecker,
+                wikipediaTaxonChecker,
                 taxonomyEntryRepository,
                 new ObjectMapper()
         );
     }
 
     @Test
-    void find_animal_success() {
+    void find_animal_with_wikidata_id_success() {
         String name = "Cat";
         String key = "Cat";
         String wikidataId = "Q146";
-        var pageDto = new WikimediaPageDto(
-                1234,
-                key,
-                name,
-                "Cat (Felis catus)",
-                "A cat"
-        );
-        var pagesDto = new WikimediaPagesDto(List.of(pageDto));
+        var pagesDto = mockWikimediaPages();
         var summaryDto = new WikipediaSummaryDto(name, wikidataId);
-        var speciesResponseDto = new GbifSpeciesResponseDto(
+        var gbifResponseDto = mockGbifResponse();
+
+        when(wikimediaClient.getPages(name, LanguageType.EN)).thenReturn(pagesDto);
+        when(wikipediaClient.getSummary("Cat", LanguageType.EN)).thenReturn(summaryDto);
+        when(wikidataTaxonChecker.isTaxon(TaxonType.ANIMAL, wikidataId)).thenReturn(true);
+        when(gbifClient.getSpecies("Felis catus")).thenReturn(gbifResponseDto);
+
+        var params = FindTaxonomyParams.builder()
+                .type(TaxonType.ANIMAL)
+                .name("Cat")
+                .langType(LanguageType.EN)
+                .strategy(TaxonCheckStrategy.WIKIDATA_ID)
+                .build();
+
+        var result = taxonomyService.find(params);
+        assertThat(result).isNotNull();
+        assertEquals(TaxonType.ANIMAL, result.type());
+
+        // wikipedia
+        assertEquals(name, result.entries().getFirst().wikipedia().title());
+        assertEquals(key, result.entries().getFirst().wikipedia().key());
+
+        // gbif
+        assertEquals("7689", result.entries().getFirst().gbif().taxonKey());
+    }
+
+    @Test
+    void find_animal_with_infobox_success() {
+        String name = "Felis catus";
+        var pagesDto = mockWikimediaPages();
+        var gbifResponseDto = mockGbifResponse();
+
+        when(wikimediaClient.getPages(name, LanguageType.EN)).thenReturn(pagesDto);
+        when(wikipediaTaxonChecker.isTaxon(TaxonType.ANIMAL, name)).thenReturn(true);
+        when(gbifClient.getSpecies("Felis catus")).thenReturn(gbifResponseDto);
+
+        var params = FindTaxonomyParams.builder()
+                .type(TaxonType.ANIMAL)
+                .name("Felis catus")
+                .langType(LanguageType.EN)
+                .strategy(TaxonCheckStrategy.WIKIPEDIA_INFOBOX)
+                .build();
+
+        var result = taxonomyService.find(params);
+        assertThat(result).isNotNull();
+        assertEquals(TaxonType.ANIMAL, result.type());
+
+        // gbif
+        assertEquals("7689", result.entries().getFirst().gbif().taxonKey());
+        assertEquals(name, result.entries().getFirst().gbif().canonicalName());
+    }
+
+
+    private static WikimediaPagesDto mockWikimediaPages() {
+        return new WikimediaPagesDto(
+                List.of(
+                        new WikimediaPageDto(
+                                1234,
+                                "Cat",
+                                "Cat",
+                                "Cat (Felis catus)",
+                                "A cat"
+                        ),
+                        new WikimediaPageDto(
+                                4567,
+                                "Cats Musical",
+                                "Cat Musical",
+                                "Some weird music about cats",
+                                "The movie is even worse."
+                        )
+                )
+        );
+    }
+
+    private static GbifSpeciesResponseDto mockGbifResponse() {
+        return new GbifSpeciesResponseDto(
                 new GbifSpeciesResponseDto.Usage(
                         "7689",
                         "Felis catus 1",
@@ -78,20 +152,5 @@ class TaxonomyServiceTest {
                         99
                 )
         );
-        when(wikimediaClient.getPages(name)).thenReturn(pagesDto);
-        when(wikipediaClient.getSummary("Cat", LanguageType.EN)).thenReturn(summaryDto);
-        when(wikidataTaxonChecker.isTaxon(TaxonType.ANIMAL, wikidataId)).thenReturn(true);
-        when(gbifClient.getSpecies("Felis catus")).thenReturn(speciesResponseDto);
-
-        var result = taxonomyService.find(TaxonType.ANIMAL, name, null);
-        assertThat(result).isNotNull();
-        assertEquals(TaxonType.ANIMAL, result.type());
-
-        // wikipedia
-        assertEquals(name, result.entries().getFirst().wikipedia().title());
-        assertEquals(key, result.entries().getFirst().wikipedia().key());
-
-        // gbif
-        assertEquals("7689", result.entries().getFirst().gbif().taxonKey());
     }
 }

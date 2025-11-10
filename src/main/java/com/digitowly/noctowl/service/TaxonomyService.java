@@ -11,7 +11,9 @@ import com.digitowly.noctowl.model.wikidata.WikimediaPageDto;
 import com.digitowly.noctowl.model.dto.TaxonomyResponse;
 import com.digitowly.noctowl.model.enums.TaxonType;
 import com.digitowly.noctowl.repository.TaxonomyEntryRepository;
+import com.digitowly.noctowl.service.dto.FindTaxonomyParams;
 import com.digitowly.noctowl.service.wikidata.WikidataTaxonChecker;
+import com.digitowly.noctowl.service.wikipedia.WikipediaTaxonChecker;
 import com.digitowly.noctowl.util.GbifSpeciesValidator;
 import com.digitowly.noctowl.util.LatinNameExtractor;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -34,39 +36,66 @@ public class TaxonomyService {
 
     private final TranslationService translationService;
     private final WikidataTaxonChecker wikidataTaxonChecker;
+    private final WikipediaTaxonChecker wikipediaTaxonChecker;
 
     private final TaxonomyEntryRepository repository;
     private final ObjectMapper objectMapper;
 
-    public TaxonomyResponse find(TaxonType type, String name, Integer entryLimit) {
-        var id = createId(type, name, entryLimit);
+    public TaxonomyResponse find(FindTaxonomyParams params) {
+        var id = createId(params);
         var cachedResult = getStoredResponse(id);
         if (cachedResult != null) return cachedResult;
 
-        var pagesResponse = wikimediaClient.getPages(name);
+        var pagesResponse = wikimediaClient.getPages(params.name(), params.langType());
         log.info("Searching wiki pages...");
         List<TaxonomyEntry> entries = new ArrayList<>();
-        var limit = entryLimit != null ? entryLimit : 1;
+        var limit = params.entryLimit() != null ? params.entryLimit() : 1;
         for (WikimediaPageDto page : pagesResponse.pages()) {
             if (entries.size() >= limit) break;
-            var summary = wikipediaClient.getSummary(page.key(), LanguageType.EN);
-            if (summary == null) continue;
-            var entry = findTaxonomyEntryByType(type, summary.wikibase_item(), page);
+            var entry = switch (params.strategy()) {
+                case WIKIDATA_ID -> findEntryByWikibaseId(params.langType(), params.type(), page);
+                case WIKIPEDIA_INFOBOX -> findEntryByWikipediaInfobox(params.type(), params.name(), page);
+            };
             if (entry == null) continue;
             entries.add(entry);
         }
         if (entries.isEmpty()) return null;
-        var response = new TaxonomyResponse(type, entries);
+        var response = new TaxonomyResponse(params.type(), entries);
         storeResponse(id, response);
         return response;
     }
 
-    private TaxonomyEntry findTaxonomyEntryByType(TaxonType type, String wikibaseId, WikimediaPageDto page) {
-        var isTaxon = wikidataTaxonChecker.isTaxon(type, wikibaseId);
+    private TaxonomyEntry findEntryByWikipediaInfobox(
+            TaxonType type,
+            String scientificName,
+            WikimediaPageDto page
+    ) {
+        var isTaxon = wikipediaTaxonChecker.isTaxon(type, scientificName);
+        if (!isTaxon) return null;
+        return getTaxonomyEntry(type, scientificName, page);
+    }
+
+    private TaxonomyEntry findEntryByWikibaseId(
+            LanguageType langType,
+            TaxonType type,
+            WikimediaPageDto page
+    ) {
+        var summary = wikipediaClient.getSummary(page.key(), langType);
+        if (summary == null) return null;
+
+        var isTaxon = wikidataTaxonChecker.isTaxon(type, summary.wikibase_item());
         if (!isTaxon) return null;
 
         var potentialLatinName = LatinNameExtractor.extract(page.excerpt());
-        var gbifResult = gbifClient.getSpecies(potentialLatinName);
+        return getTaxonomyEntry(type, potentialLatinName, page);
+    }
+
+    private TaxonomyEntry getTaxonomyEntry(
+            TaxonType type,
+            String scientificName,
+            WikimediaPageDto page
+    ) {
+        var gbifResult = gbifClient.getSpecies(scientificName);
 
         var isValidResult = GbifSpeciesValidator.validate(gbifResult);
         if (!isValidResult) return null;
@@ -125,10 +154,13 @@ public class TaxonomyService {
         }
     }
 
-    private String createId(TaxonType type, String input, Integer entryLimit) {
-        var name = input.toLowerCase().trim().replaceAll(" ", "-");
-        if (entryLimit == null) return type + "-" + name;
-        return type + "-" + name + "-" + entryLimit;
+    private String createId(FindTaxonomyParams params) {
+        var name = params.name().toLowerCase().trim().replaceAll(" ", "-");
+        if (params.entryLimit() == null) return params.type() + "-" + name;
+        return params.type() + "-"
+                + name + "-"
+                + params.langType().getName() + "-"
+                + params.entryLimit();
     }
 
 }

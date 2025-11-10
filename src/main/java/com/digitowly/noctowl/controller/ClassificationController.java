@@ -1,10 +1,11 @@
 package com.digitowly.noctowl.controller;
 
-import com.digitowly.noctowl.model.dto.TaxonomyResponse;
-import com.digitowly.noctowl.model.enums.TaxonType;
-import com.digitowly.noctowl.service.TaxonomyService;
+import com.digitowly.noctowl.model.SpeciesResponse;
+import com.digitowly.noctowl.service.SpeciesService;
+import com.digitowly.noctowl.service.dto.FindSpeciesParams;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -12,15 +13,27 @@ import org.springframework.web.bind.annotation.RestController;
 @AllArgsConstructor
 public class ClassificationController {
 
-    private final TaxonomyService taxonomyService;
+    private final SpeciesService speciesService;
 
-    @GetMapping(value = "/animals/find")
-    public TaxonomyResponse findAnimal(@RequestParam(name = "name") String name) {
-        return taxonomyService.find(TaxonType.ANIMAL, name, null);
+    @GetMapping(value = "{lang}/{type}/find/scientific")
+    public SpeciesResponse findAnimalByScientificName(
+            @PathVariable(name = "lang") String lang,
+            @PathVariable(name = "type") String type,
+
+            @RequestParam(name = "name") String name
+    ) {
+        var params = new FindSpeciesParams(lang, type, name);
+        return speciesService.findByScientificName(params);
     }
 
-    @GetMapping(value = "/plants/find")
-    public TaxonomyResponse findPlant(@RequestParam(name = "name") String name) {
-        return taxonomyService.find(TaxonType.PLANT, name, null);
+    @GetMapping(value = "{lang}/{type}/find/common")
+    public SpeciesResponse findAnimalByCommonName(
+            @PathVariable(name = "lang") String lang,
+            @PathVariable(name = "type") String type,
+
+            @RequestParam(name = "name") String name
+    ) {
+        var params = new FindSpeciesParams(lang, type, name);
+        return speciesService.findByCommonName(params);
     }
 }

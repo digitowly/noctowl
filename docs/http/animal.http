@@ -1,2 +1,6 @@
-### GET animal
-{{baseUrl}}/animals/find?name=owl
+### Get animal by common name
+// @timeout 6000
+GET {{baseUrl}}/en/animals/find/common?name=tawny owl
+
+### Get animal by scientific name
+GET {{baseUrl}}/en/animals/find/scientific?name=Strix aluco
