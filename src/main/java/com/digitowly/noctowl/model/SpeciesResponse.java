@@ -3,7 +3,8 @@ package com.digitowly.noctowl.model;
 import com.digitowly.noctowl.model.dto.TaxonomyEntry;
 import com.digitowly.noctowl.model.enums.ConservationStatus;
 import com.digitowly.noctowl.model.enums.LanguageType;
-import com.digitowly.noctowl.service.scrape.dto.AnimalScrapeResult;
+import com.digitowly.noctowl.service.wikipedia.dto.AnimalScrapeResult;
+import com.digitowly.noctowl.service.wikipedia.dto.WikipediaInfobox;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -12,6 +13,7 @@ import lombok.Setter;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 @AllArgsConstructor
 @Builder
@@ -52,30 +54,74 @@ public class SpeciesResponse {
             TaxonomyEntry taxonomyEntry,
             AnimalScrapeResult animalScrapeResult
     ) {
-        var wikipediaInfobox = animalScrapeResult.wikipediaInfobox();
-        var animalTaxonomy = wikipediaInfobox.taxonomy();
+        var wikipediaInfobox = Optional.ofNullable(animalScrapeResult)
+                .map(AnimalScrapeResult::wikipediaInfobox)
+                .orElse(null);
+        var animalTaxonomy = Optional.ofNullable(wikipediaInfobox)
+                .flatMap(WikipediaInfobox::taxonomy);
 
-        name = taxonomyEntry.wikipedia().title();
-        binomialName = taxonomyEntry.wikipedia().scientificName();
-        taxonomyClass = animalTaxonomy.taxonomyClass().scientificName();
-        order = animalTaxonomy.order().scientificName();
-        family = animalTaxonomy.family().scientificName();
-        genus = animalTaxonomy.genus().scientificName();
-        gbifKey = taxonomyEntry.gbif().taxonKey();
-        translatedNames = mapTranslatedNames(taxonomyEntry.wikipedia().lang());
-        conservationStatus = formatConservationStatus(wikipediaInfobox.conservationStatus());
+        var wikipediaInfo = Optional.ofNullable(taxonomyEntry)
+                .map(TaxonomyEntry::wikipedia)
+                .orElse(null);
+
+        var gbifInfo = Optional.ofNullable(taxonomyEntry)
+                .map(TaxonomyEntry::gbif)
+                .orElse(null);
+
+        name = Optional.ofNullable(wikipediaInfo)
+                .map(TaxonomyEntry.WikipediaInfo::title)
+                .orElse(null);
+
+        binomialName = Optional.ofNullable(wikipediaInfo)
+                .map(TaxonomyEntry.WikipediaInfo::scientificName)
+                .orElse(null);
+
+        taxonomyClass = animalTaxonomy
+                .map(WikipediaInfobox.Taxonomy::taxonomyClass)
+                .orElse(Optional.empty())
+                .map(WikipediaInfobox.Taxonomy.Element::scientificName)
+                .orElse(null);
+
+        order = animalTaxonomy
+                .map(WikipediaInfobox.Taxonomy::order)
+                .orElse(Optional.empty())
+                .map(WikipediaInfobox.Taxonomy.Element::scientificName)
+                .orElse(null);
+
+        family = animalTaxonomy
+                .map(WikipediaInfobox.Taxonomy::family)
+                .orElse(Optional.empty())
+                .map(WikipediaInfobox.Taxonomy.Element::scientificName)
+                .orElse(null);
+
+        genus = animalTaxonomy
+                .map(WikipediaInfobox.Taxonomy::genus)
+                .orElse(Optional.empty())
+                .map(WikipediaInfobox.Taxonomy.Element::scientificName)
+                .orElse(null);
+
+        gbifKey = Optional.ofNullable(gbifInfo)
+                .map(TaxonomyEntry.GbifInfo::taxonKey)
+                .orElse(null);
+
+        translatedNames = mapTranslatedNames(Optional.ofNullable(wikipediaInfo)
+                .map(TaxonomyEntry.WikipediaInfo::lang)
+                .orElse(null));
+
+        conservationStatus = Optional.ofNullable(wikipediaInfobox)
+                .flatMap(WikipediaInfobox::conservationStatus)
+                .map(ConservationStatus::getName)
+                .orElse(null);
     }
+
 
     private static Map<String, String> mapTranslatedNames(Map<LanguageType, String> translatedNames) {
         var result = new HashMap<String, String>();
+        if (translatedNames == null || translatedNames.isEmpty()) return result;
         translatedNames.forEach((languageType, name) -> {
-            if (name == null || name.isBlank()) return;
+            if (name == null || name.isBlank() || languageType == null) return;
             result.put(languageType.getName(), name);
         });
         return result;
-    }
-
-    private static String formatConservationStatus(ConservationStatus conservationStatus) {
-        return conservationStatus.getName() + " " + "(" + conservationStatus.getCode() + ")";
     }
 }

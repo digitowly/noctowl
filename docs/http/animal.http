@@ -1,3 +1,6 @@
-### Get animal by unspecifc name
+### Get animal by common name
 // @timeout 6000
-GET {{baseUrl}}/en/animals/find/unspecific?name=tawny owl
+GET {{baseUrl}}/en/animals/find/common?name=tawny owl
+
+### Get animal by scientific name
+GET {{baseUrl}}/en/animals/find/scientific?name=Strix aluco

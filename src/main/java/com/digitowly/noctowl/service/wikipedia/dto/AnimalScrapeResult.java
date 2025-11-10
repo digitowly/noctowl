@@ -1,8 +1,6 @@
-package com.digitowly.noctowl.service.scrape.dto;
+package com.digitowly.noctowl.service.wikipedia.dto;
 
-import lombok.Builder;
 
-@Builder
 public record AnimalScrapeResult(
         WikipediaInfobox wikipediaInfobox
 ) {

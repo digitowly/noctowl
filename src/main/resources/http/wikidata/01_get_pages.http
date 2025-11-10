@@ -1,4 +1,4 @@
-GET https://api.wikimedia.org/core/v1/wikipedia/en/search/page?q=owl
+GET https://api.wikimedia.org/core/v1/wikipedia/en/search/page?q=fennec
 
 ###
 

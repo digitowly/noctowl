@@ -1,7 +1,8 @@
-package com.digitowly.noctowl.service.scrape;
+package com.digitowly.noctowl.service.wikipedia;
 
 import com.digitowly.noctowl.model.enums.ConservationStatus;
-import com.digitowly.noctowl.service.scrape.dto.WikipediaInfobox;
+import com.digitowly.noctowl.service.scrape.ScrapeService;
+import com.digitowly.noctowl.service.wikipedia.dto.WikipediaInfobox;
 import lombok.AllArgsConstructor;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -9,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
 import java.util.Objects;
+import java.util.Optional;
 
 @Service
 @AllArgsConstructor
@@ -30,8 +32,8 @@ public class AnimalWikipediaScrapeService {
         return WikipediaInfobox.builder()
                 .scientificName(scientificName)
                 .commonName(commonName)
-                .conservationStatus(conservationStatus)
-                .taxonomy(taxonomy)
+                .conservationStatus(conservationStatus != null ? Optional.of(conservationStatus) : null)
+                .taxonomy(Optional.ofNullable(taxonomy))
                 .build();
     }
 
@@ -43,14 +45,14 @@ public class AnimalWikipediaScrapeService {
         var family = getTaxonomyElement("Family", infobox);
         var genus = getTaxonomyElement("Genus", infobox);
 
-        return WikipediaInfobox.Taxonomy.builder()
-                .kingdom(kingdom)
-                .phylum(phylum)
-                .taxonomyClass(taxonomyClass)
-                .order(order)
-                .family(family)
-                .genus(genus)
-                .build();
+        var builder = WikipediaInfobox.Taxonomy.builder();
+        if (kingdom != null) builder.kingdom(Optional.of(kingdom));
+        if (phylum != null) builder.phylum(Optional.of(phylum));
+        if (taxonomyClass != null) builder.taxonomyClass(Optional.of(taxonomyClass));
+        if (order != null) builder.order(Optional.of(order));
+        if (family != null) builder.family(Optional.of(family));
+        if (genus != null) builder.genus(Optional.of(genus));
+        return builder.build();
     }
 
     private WikipediaInfobox.Taxonomy.Element getTaxonomyElement(String name, Element infobox) {

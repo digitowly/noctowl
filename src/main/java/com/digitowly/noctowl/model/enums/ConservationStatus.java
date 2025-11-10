@@ -19,4 +19,8 @@ public enum ConservationStatus {
 
     private final String name;
     private final String code;
+
+    public String fullName() {
+        return this.name + " (" + this.code + ")";
+    }
 }

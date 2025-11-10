@@ -9,7 +9,6 @@ public enum LanguageType {
     /**
      * English
      */
-    // English
     EN("en", "english"),
 
     /**
@@ -83,6 +82,11 @@ public enum LanguageType {
     NO("no", "norsk"),
 
     /**
+     * Danish
+     */
+    DA("da", "dansk"),
+
+    /**
      * Finnish
      */
     FI("fi", "suomi"),
@@ -105,7 +109,12 @@ public enum LanguageType {
     /**
      * Ukrainian
      */
-    UK("uk", "українська");
+    UK("uk", "українська"),
+
+    /**
+     * Greece
+     */
+    EL("el", "Ελληνικά");
 
     private final String name;
     private final String fullName;

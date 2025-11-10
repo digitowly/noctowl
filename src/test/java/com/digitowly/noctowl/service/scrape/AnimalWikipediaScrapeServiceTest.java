@@ -1,11 +1,14 @@
 package com.digitowly.noctowl.service.scrape;
 
 import com.digitowly.noctowl.model.enums.ConservationStatus;
-import com.digitowly.noctowl.service.scrape.dto.WikipediaInfobox;
+import com.digitowly.noctowl.service.wikipedia.dto.WikipediaInfobox;
+import com.digitowly.noctowl.service.wikipedia.AnimalWikipediaScrapeService;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
@@ -28,15 +31,15 @@ class AnimalWikipediaScrapeServiceTest {
         var expectedInfobox = WikipediaInfobox.builder()
                 .scientificName(scientificName)
                 .commonName("Tawny owl")
-                .conservationStatus(ConservationStatus.LeastConcern)
-                .taxonomy(WikipediaInfobox.Taxonomy.builder()
-                        .kingdom(new WikipediaInfobox.Taxonomy.Element(
+                .conservationStatus(Optional.of(ConservationStatus.LeastConcern))
+                .taxonomy(Optional.ofNullable(WikipediaInfobox.Taxonomy.builder()
+                        .kingdom(Optional.of(new WikipediaInfobox.Taxonomy.Element(
                                 "Animalia", "Animal"
-                        ))
-                        .phylum(new WikipediaInfobox.Taxonomy.Element(
+                        )))
+                        .phylum(Optional.of(new WikipediaInfobox.Taxonomy.Element(
                                 "Chordata", "Chordate"
-                        ))
-                        .build())
+                        )))
+                        .build()))
                 .build();
 
         Document mockDoc = Jsoup.parse("""
@@ -67,14 +70,14 @@ class AnimalWikipediaScrapeServiceTest {
                 .scientificName(scientificName)
                 .commonName("Tawny owl")
                 .conservationStatus(null)
-                .taxonomy(WikipediaInfobox.Taxonomy.builder()
-                        .kingdom(new WikipediaInfobox.Taxonomy.Element(
+                .taxonomy(Optional.ofNullable(WikipediaInfobox.Taxonomy.builder()
+                        .kingdom(Optional.of(new WikipediaInfobox.Taxonomy.Element(
                                 "Animalia", "Animal"
-                        ))
-                        .phylum(new WikipediaInfobox.Taxonomy.Element(
+                        )))
+                        .phylum(Optional.of(new WikipediaInfobox.Taxonomy.Element(
                                 "Chordata", "Chordate"
-                        ))
-                        .build())
+                        )))
+                        .build()))
                 .build();
 
         Document mockDoc = Jsoup.parse("""

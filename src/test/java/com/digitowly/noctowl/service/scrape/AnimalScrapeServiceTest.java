@@ -1,7 +1,8 @@
 package com.digitowly.noctowl.service.scrape;
 
-import com.digitowly.noctowl.service.scrape.dto.AnimalScrapeResult;
-import com.digitowly.noctowl.service.scrape.dto.WikipediaInfobox;
+import com.digitowly.noctowl.service.wikipedia.dto.AnimalScrapeResult;
+import com.digitowly.noctowl.service.wikipedia.dto.WikipediaInfobox;
+import com.digitowly.noctowl.service.wikipedia.AnimalWikipediaScrapeService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -23,11 +24,11 @@ class AnimalScrapeServiceTest {
     @Test
     void scrape() {
         var scientificName = "Strix aluco";
-        var expectedResult = AnimalScrapeResult.builder()
-                .wikipediaInfobox(WikipediaInfobox.builder()
-                        .scientificName(scientificName)
-                        .build())
+        var wikipediaInfobox = WikipediaInfobox.builder()
+                .scientificName(scientificName)
                 .build();
+        
+        var expectedResult = new AnimalScrapeResult(wikipediaInfobox);
 
         when(animalWikipediaScrapeService.scrapeInfobox(scientificName))
                 .thenReturn(expectedResult.wikipediaInfobox());
